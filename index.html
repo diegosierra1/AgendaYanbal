@@ -1,0 +1,901 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>Agenda Yanbal</title>
+
+
+<link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+<link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+
+<link rel="stylesheet" href="css/app.css">
+<!--
+<link rel="stylesheet" href="css/font-awesome-4.3.0/css/font-awesome.min.css">
+-->
+<link rel="stylesheet" href="css/web-fonts-with-css/css/fontawesome-all.min.css">
+
+
+</head>
+<body>
+<input type="hidden" id="ingreso_abierto" value="no">
+<div class="statusbar-overlay"></div>
+
+<div class="panel-overlay"></div>
+
+
+<!-- panel izq menu-->
+
+<div class="panel panel-left panel-reveal" >
+<div class="content-block">
+
+	<p>
+	<img src="imagenes/logo_Agenda120.png">  
+	</p>
+	<p><a href="#view-2" id="boton-1"  class="tab-link close-panel"><h4><i class="fa fa-calendar-alt"></i> Mi Agenda</h4></a></p>
+     <p><a href="#view-3" id="boton-2"  class="tab-link close-panel"><h4><i class="fa fa-bell"></i> Recordatorios</h4></a></p>
+     <p><a href="#" id="boton-3" onClick="sincronizar();" class="tab-link close-panel"><h4><i class="fa fa-plug"></i> Sincronización</h4></a></p>
+     <p><a href="#view-4" id="boton-4" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-share-alt"></i> Compartir</h4></a></p>
+     <p><a href="#view-5" id="boton-5" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-barcode"></i> Renovar</h4></a></p>
+     <p><a href="#view-6" id="boton-6" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-info-circle"></i> Acerca de</h4></a></p>
+     <p><a href="#view-7" id="boton-7" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-life-ring"></i> Ayuda</h4></a></p>
+     <p><a href="#view-8" id="boton-8" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-download"></i> Actualizar App</h4></a></p>
+     <p><a href="" id="boton-9"  onclick="salir();" class="tab-link close-panel"><h4><i class="fa fa-power-off"></i> Salir</h4></a></p>
+                            
+</div>
+</div>
+
+<!-- fin panel izq menu-->
+
+  
+
+
+
+
+<!--Creamos el contenedor de vistas-->
+<div class="views tabs toolbar-through">
+
+
+
+<div id="view-1" class="view view-main tab active">
+
+<div class="navbar">
+<div class="navbar-inner">
+<div class="center sliding">Bienvenido</div>
+</div>
+</div>
+
+<div class="pages navbar-through">
+
+
+<div data-page="index-1" class="page">
+
+<div class="page-content">
+<div align="center" id="zona_logo_home" style="margin-top: 30px;">
+<img src="imagenes/logo_Agenda180.png">  
+ </div>
+                        
+
+<div class="content-block">
+<div class="content-block-inner">
+
+	<div class = "list-block">
+                        <ul>
+                          
+                          <li class="nuevo">
+                              <div class = "item-content">
+                                 <div class = "item-media"><i class = "icon icon-form-name"></i></div>
+                                 <div class = "item-inner">
+                                   <!--
+                                    <div class = "item-title label">Esta Estación</div>
+                                    -->
+                                    <div class = "item-input">
+                                       <input type = "text" id="nombre" placeholder = "Nombre">
+										
+                                    </div>
+                                 </div>
+                              </div>
+                           </li>
+                           
+                           <li>
+                              <div class = "item-content">
+                                 <div class = "item-media"><i class = "icon icon-form-email"></i></div>
+                                 <div class = "item-inner">
+                                   <!--
+                                    <div class = "item-title label">Esta Estación</div>
+                                    -->
+                                    <div class = "item-input">
+                                       <input type = "text" id="email" placeholder = "Email Registrado">
+										
+                                    </div>
+                                 </div>
+                              </div>
+                           </li>
+                           
+                           <li>
+                              <div class = "item-content">
+                                 <div class = "item-media"><i class = "icon icon-form-password"></i></div>
+                                 <div class = "item-inner">
+                                   <!--
+                                    <div class = "item-title label">Documento Usuario</div>
+                                    -->
+                                    <div class = "item-input">
+                                       <input type = "password" id="clave" placeholder = "Clave">
+                                    </div>
+                                    
+                                    <div class = "item-input confirmar">
+                                       <input type = "password" id="clave2" placeholder = "Confirme Clave">
+                                    </div>
+                                 </div>
+                              </div>
+                           </li>
+                           
+                          
+                           
+							   </ul>
+							   <br>
+							   
+							   <input type="hidden" id="tipo_ingreso" value="ingreso">
+							   <!--
+							   <button type="button" id="boton_ingresar" class="button color-green" onclick="db_ingresar();">Ingresar*</button>
+							   -->
+							   <input id="submmit-register" type="button" value="ingresar" class="button button-big button-fill color-green" onclick="db_ingresar();">
+							   
+		<div style="white-space: nowrap; margin-top: 8px; ">
+							  <input type="button" id="boton_registrarse" class="button button-fill color-gray" onclick="ejecutar('nuevo');" value="Registrarse">
+							  <input type="button" id="boton_olvido" class="button button-fill color-gray" onclick="ejecutar('recordar');" value="Olvido su Clave?">
+							   </div>
+							   
+							 <div style="white-space: nowrap;" class="ingreso">
+							 <br><br>
+							  <input type="button" id="boton_ingresar" class="button button-fill color-gray" onclick="ejecutar('ingresar');" value="Ingresar con sus Claves">
+							   </div>  
+							</div>
+							
+							
+</div>
+</div>
+
+
+
+</div>
+
+
+
+</div>
+</div>
+
+<!--aqui va el footer -->
+	
+</div>
+
+
+
+
+<div id="view-2" class="view tab">
+
+<div class="navbar">
+<div class="navbar-inner">
+<div class="center sliding" ><span class="internet"><i class="fa fa-wifi"></i></span> <span class="identificacion"></span></div>
+
+<div class="right">
+<a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+</div>
+</div>
+</div>
+
+  
+<div class="pages navbar-through">
+<div data-page="index-2" class="page">
+
+<div class="page-content">
+<input type="hidden" id="year_actual" value="" >
+<input type="hidden" id="editando" value="" >
+<div class="titulo_campana"><i class="fa fa-chevron-circle-left fa-lg avanzar" onClick="cargar_campana('prev');"></i> CAMPAÑA: <select id="campana" onChange="cargar_campana(this.value)">
+
+		<option value="2018-1">2018-1</option>
+				<option value="2018-2">2018-2</option>
+				<option value="2018-3">2018-3</option>
+				<option value="2018-4">2018-4</option>
+				<option value="2018-5">2018-5</option>
+				<option value="2018-6">2018-6</option>
+				<option value="2018-7">2018-7</option>
+				<option value="2018-8">2018-8</option>
+				<option value="2018-9">2018-9</option>
+				<option value="2018-10">2018-10</option>
+				<option value="2018-11">2018-11</option>
+				<option value="2018-12">2018-12</option>
+				<option value="2018-13">2018-13</option>
+				<option value="2019-1">2019-1</option>
+				<option value="2019-2">2019-2</option>
+				<option value="2019-3">2019-3</option>
+				<option value="2019-4">2019-4</option>
+				<option value="2019-5">2019-5</option>
+				<option value="2019-6">2019-6</option>
+				<option value="2019-7">2019-7</option>
+				<option value="2019-8">2019-8</option>
+				<option value="2019-9">2019-9</option>
+				<option value="2019-10">2019-10</option>
+				<option value="2019-11">2019-11</option>
+				<option value="2019-12">2019-12</option>
+				<option value="2019-13">2019-13</option>
+				
+		</select> <i class="fa fa-chevron-circle-right fa-lg avanzar" onClick="cargar_campana('next');"></i>
+</div>
+<div id="zona_calendario"></div>
+<div id="fecha_cargada_texto"></div>
+<input type="hidden" id="fecha_cargada">
+
+<div id="zona_agenda">
+	
+	<input type="hidden" id="asunto_cita" value="fa fa-clock">
+	<input type="hidden" id="asunto_llamada" value="fa fa-phone"> 
+	<input type="hidden" id="asunto_email" value="fa fa-envelope"> 
+	<input type="hidden" id="asunto_capacitacion" value="fa fa-book"> 
+	<input type="hidden" id="asunto_pedido" value="fa fa-cube">
+	<input type="hidden" id="asunto_entregas" value="fa fa-cubes"> 
+	<input type="hidden" id="asunto_personal" value="fa fa-heart">
+	
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr valign="top">
+      <td class="uno">
+	<div class="agenda_hora">6</div>
+    <div class="agenda_pie">AM</div>	
+     </td>
+      <td class="dos H6">
+	
+	<div  onClick="editar('6')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto6">
+    <input type="hidden" id="Lugar6">
+    <input type="hidden" id="Nota6">
+    <input type="hidden" id="Minutos6" value="00">
+    <input type="hidden" id="Asunto6">
+    
+     </td>
+      <td class="tres">&nbsp;</td>
+         <td class="uno">
+	<div class="agenda_hora">1</div>
+    <div class="agenda_pie">PM</div>	
+     </td>
+      <td class="dos H13">
+	
+		  <div  onClick="editar('13')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto13">
+    <input type="hidden" id="Lugar13">
+    <input type="hidden" id="Nota13">
+    <input type="hidden" id="Minutos13" value="00">
+    <input type="hidden" id="Asunto13">
+    
+     </td>
+    </tr>
+    <tr valign="top">
+      <td class="uno">
+	<div class="agenda_hora">7</div>
+    <div class="agenda_pie">AM</div>	
+     </td>
+      <td class="dos H7">
+	
+		   <div  onClick="editar('7')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto7">
+    <input type="hidden" id="Lugar7">
+    <input type="hidden" id="Nota7">
+    <input type="hidden" id="Minutos7" value="00">
+    <input type="hidden" id="Asunto7">
+    
+     </td>
+      <td class="tres">&nbsp;</td>
+         <td class="uno">
+	<div class="agenda_hora">2</div>
+    <div class="agenda_pie">PM</div>	
+     </td>
+      <td class="dos H14">
+	
+		   <div  onClick="editar('14')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto14">
+    <input type="hidden" id="Lugar14">
+    <input type="hidden" id="Nota14">
+    <input type="hidden" id="Minutos14" value="00">
+    <input type="hidden" id="Asunto14">
+		  
+     </td>
+    </tr>
+    <tr valign="top">
+      <td class="uno">
+	<div class="agenda_hora">8</div>
+    <div class="agenda_pie">AM</div>	
+     </td>
+      <td class="dos H8">
+	
+     <div  onClick="editar('8')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto8">
+    <input type="hidden" id="Lugar8">
+    <input type="hidden" id="Nota8">
+    <input type="hidden" id="Minutos8" value="00">
+    <input type="hidden" id="Asunto8">
+    
+     </td>
+      <td class="tres">&nbsp;</td>
+         <td class="uno">
+	<div class="agenda_hora">3</div>
+    <div class="agenda_pie">PM</div>	
+     </td>
+      <td class="dos H15">
+	
+		   <div  onClick="editar('15')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto15">
+    <input type="hidden" id="Lugar15">
+    <input type="hidden" id="Nota15">
+    <input type="hidden" id="Minutos15" value="00">
+    <input type="hidden" id="Asunto15">
+    
+     </td>
+    </tr>
+    <tr valign="top">
+      <td class="uno">
+	<div class="agenda_hora">9</div>
+    <div class="agenda_pie">AM</div>	
+     </td>
+      <td class="dos H9">
+	
+		   <div  onClick="editar('9')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto9">
+    <input type="hidden" id="Lugar9">
+    <input type="hidden" id="Nota9">
+    <input type="hidden" id="Minutos9" value="00">
+    <input type="hidden" id="Asunto9">
+    
+     </td>
+      <td class="tres">&nbsp;</td>
+         <td class="uno">
+	<div class="agenda_hora">4</div>
+    <div class="agenda_pie">PM</div>	
+     </td>
+      <td class="dos H16">
+	
+		   <div  onClick="editar('16')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto16">
+    <input type="hidden" id="Lugar16">
+    <input type="hidden" id="Nota16">
+    <input type="hidden" id="Minutos16" value="00">
+    <input type="hidden" id="Asunto16">
+    
+     </td>
+    </tr>
+    <tr valign="top">
+      <td class="uno">
+	<div class="agenda_hora">10</div>
+    <div class="agenda_pie">AM</div>	
+     </td>
+      <td class="dos H10">
+	
+		   <div  onClick="editar('10')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto10">
+    <input type="hidden" id="Lugar10">
+    <input type="hidden" id="Nota10">
+    <input type="hidden" id="Minutos10" value="00">
+    <input type="hidden" id="Asunto10">
+    
+     </td>
+      <td class="tres">&nbsp;</td>
+         <td class="uno">
+	<div class="agenda_hora">5</div>
+    <div class="agenda_pie">PM</div>	
+     </td>
+      <td class="dos H17">
+	
+		   <div  onClick="editar('17')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto17">
+    <input type="hidden" id="Lugar17">
+    <input type="hidden" id="Nota17">
+    <input type="hidden" id="Minutos17" value="00">
+    <input type="hidden" id="Asunto17">
+    
+     </td>
+    </tr>
+    <tr valign="top">
+      <td class="uno">
+	<div class="agenda_hora">11</div>
+    <div class="agenda_pie">AM</div>	
+     </td>
+      <td class="dos H11">
+	
+     <div  onClick="editar('11')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto11">
+    <input type="hidden" id="Lugar11">
+    <input type="hidden" id="Nota11">
+    <input type="hidden" id="Minutos11" value="00">
+    <input type="hidden" id="Asunto11">
+    
+     </td>
+      <td class="tres">&nbsp;</td>
+         <td class="uno">
+	<div class="agenda_hora">6</div>
+    <div class="agenda_pie">PM</div>	
+     </td>
+      <td class="dos H18">
+	
+		   <div  onClick="editar('18')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto18">
+    <input type="hidden" id="Lugar18">
+    <input type="hidden" id="Nota18">
+    <input type="hidden" id="Minutos18" value="00">
+    <input type="hidden" id="Asunto18">
+    
+     </td>
+    </tr>
+    <tr valign="top">
+      <td class="uno">
+	<div class="agenda_hora">12</div>
+    <div class="agenda_pie">PM</div>	
+     </td>
+      <td class="dos H12">
+	
+     <div  onClick="editar('12')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto12">
+    <input type="hidden" id="Lugar12">
+    <input type="hidden" id="Nota12">
+    <input type="hidden" id="Minutos12" value="00">
+    <input type="hidden" id="Asunto12">
+    
+     </td>
+      <td class="tres">&nbsp;</td>
+         <td class="uno">
+	<div class="agenda_hora">7</div>
+    <div class="agenda_pie">PM</div>	
+     </td>
+      <td class="dos H19">
+	
+		   <div  onClick="editar('19')" class="zona_editar_agenda">
+  <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
+		  </div>
+   <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
+   <div class="agenda_lugar"><i class="fa fa-map-marker-alt"></i> <span class="lugar"></span></div>
+    <div class="agenda_nota"><i class="fa fa-edit"></i><span class="sincronizar"></span> <span class="nota"></span></div>
+    </div>
+    <input type="hidden" id="Contacto19">
+    <input type="hidden" id="Lugar19">
+    <input type="hidden" id="Nota19">
+    <input type="hidden" id="Minutos19" value="00">
+    <input type="hidden" id="Asunto19">
+    
+     </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+			
+</div>
+
+  
+</div>
+
+</div>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="view-3" class="view tab">
+
+<div class="navbar">
+<div class="navbar-inner">
+<div class="center sliding">Recordatorios</div>
+<div class="right">
+<a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+</div>
+</div>
+</div>
+
+
+
+<div class="pages navbar-through">
+<div data-page="index-3" class="page">
+<div class="page-content">
+<div class="content-block-title" id="titulo_formulario">Configurar Recordatorios email</div>
+<div class="content-block">
+xxxx
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+	
+<div id="view-4" class="view tab">
+<div class="navbar">
+<div class="navbar-inner">
+<div class="center sliding">Compartir</div>
+<div class="right">
+<a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+</div>
+</div>
+</div>
+
+<div class="pages navbar-through">
+<div data-page="index-4" class="page">
+<div class="page-content">
+
+
+   <div align="center" style="margin-top: 30px;">
+    <img src="imagenes/logo_Agenda180.png">  
+                        </div>
+                        
+
+<div class="content-block">
+<div class="content-block-inner" align="center">
+ <p>Comparte esta aplicación</p>
+   
+   <div class = "item-input"><input type = "text" id="compartir_nombre" placeholder = "Nombre de su Amigo"></div>
+<div class = "item-input"><input type = "text" id="compartir_email" placeholder = "email de su Amigo"></div>
+ <div class="item-input-wrap"><textarea id="compartir_texto" placeholder="mensaje">Hola he estado utilizando esta aplicación y creo que te puede ser útil a ti también.</textarea> </div>   
+    <input id="boton_compartir" type="button" value="compartir" class="button button-big button-fill color-green" onclick="compartir();">
+
+     
+ 
+	</div></div>
+	</div></div>
+	</div>
+	                
+</div>
+
+
+		
+<div id="view-5" class="view tab">
+<div class="navbar">
+<div class="navbar-inner">
+<div class="center sliding">Renovar</div>
+<div class="right">
+<a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+</div>
+</div>
+</div>
+
+<div class="pages navbar-through">
+<div data-page="index-5" class="page">
+<div class="page-content">
+
+
+   <div align="center" style="margin-top: 30px;">
+    <img src="imagenes/logo_Agenda180.png">                      
+                        </div>
+                        
+
+<div class="content-block">
+<div class="content-block-inner" align="center">
+ <p><span class="nombre_usuario"></span><br>
+Fecha de Vencimiento de tu suscripción: <span class="fecha_vigencia"></span>
+<br>
+ <input type="button" class="button button-fill color-green" onclick="actualizar_fecha_vencimiento();" value="Actualizar Fecha Vencimiento"> 
+  </p>
+   
+  <h3>Renovar Suscripción por 1 año</h3>
+  <h2>$ 12.000</h2>
+		
+     <a href="#" class="external" target="_system" id="renovar_ahora">Renueva Ahora</a>
+     
+     
+ 
+	</div></div>
+	</div></div>
+	</div>
+	                
+</div>
+
+
+
+<div id="view-6" class="view tab">
+<div class="navbar">
+<div class="navbar-inner">
+<div class="center sliding">Acerca de esta App</div>
+<div class="right">
+<a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+</div>
+</div>
+</div>
+
+<div class="pages navbar-through">
+<div data-page="index-6" class="page">
+<div class="page-content">
+
+
+   <div align="center" style="margin-top: 30px;">
+                            <img src="imagenes/logo_Agenda180.png">
+                        </div>
+                        
+
+<div class="content-block">
+<div class="content-block-inner" align="center">
+ <strong>Versión de la Apliacción: <span class="version"></span></strong><br>
+ Esta es una aplicación Desarrollada por IndexDream.<br>
+<br>
+www.indexdream.com
+ <br>
+  <br>
+   <img src="imagenes/logo_IndexDream.png">
+    <br><br>
+    <h4>Terminos y Condiciones</h4>
+    Toda la información y los datos personales registrados en nuestro sistema son completamente confidenciales y de ninguna maneran seran compartidos con terceros por ningún motivo, salvo orden Judicial. <br><br>
+    No tenemos ningúna clase de responsabilidad por cualquier inconveniente que resulte de un mal manejo de esta aplicación, por perdida de datos, o daño en hardware o Sotware del dispositivo en que se instale.
+	</div></div>
+	</div></div>
+	</div>
+	                
+</div>
+
+
+
+<div id="view-7" class="view tab">
+
+<div class="navbar">
+<div class="navbar-inner">
+<div class="center sliding">Ayuda</div>
+
+<div class="right">
+<a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+</div>
+</div>
+</div>
+
+
+<div class="pages navbar-through">
+<div data-page="index-7" class="page">
+<div class="page-content">
+<div class="content-block">
+
+
+
+<p class="zona_ayuda">
+	<p>Descargue el APK desde: <br>
+	<!--
+		<a href="https://build.phonegap.com/apps/2532700/install/X6rmJZZaVBB_psakHb5v" target="_blank">Descargar</a>
+		-->
+		<img src="imagenes/chart.png">
+		<br>
+<br>
+Cuando hay actualizaciones disponibles de la aplicación al iniciar se da la opción de actualizar o hacer un Update 
+</p>					 
+	<div class="titulo_ayuda"> <i class="fa fa-calendar-alt"></i> Mi Agenda</div>                                        
+	<p><img src="imagenes/captura_agenda.png" class="ayuda"></p>
+   
+    <div class="titulo_ayuda"> <i class="fa fa-bell"></i> Recordatorios</div>                                        
+	<p>Podrá definir si desea o no que el sistema envie un mail con su agenda diaria a su correo electronico. Solo se incluyen los registros que hayan sido sincronizados y que a su vez están marcados un un icono de una nube</p>                                                             
+                                                                 
+     <div class="titulo_ayuda"> <i class="fa fa-plug"></i> Sincronización</div>                                        
+	<p>Activa el sistema que genera una copia de sus registros en la nube, lo que le permitirá acceder al servicio de correo con agenda diaria y poder utilizar su agenda en varios dispositivos a la vez</p> 
+    
+     <div class="titulo_ayuda"> <i class="fa fa-share-alt"></i> Compartir</div>                                        
+	<p>Opción para enviar un correo a un amigo que le pueda ser util esta aplicación. </p>                                                            
+                                                                                                                            
+      <div class="titulo_ayuda"> <i class="fa fa-barcode"></i> Renovar</div>                                        
+	<p>Opción para realizar un pago en linea, por medio de un servicio de pago seguro, de su suscripción anual.</p>                                                                                                                                                                                
+    <div class="titulo_ayuda"> <i class="fa fa-download"></i> Actualizar App</div>                                        
+	<p>Se da la opción de descargar la última versión disponible, si existe</p>
+	
+	<div class="titulo_ayuda"> <i class="fa fa-search"></i> Buscador</div>                                        
+	<p>Opción para realizar busquedas por asunto o palabra clave, los resultados se organizan de reciente a menos reciente. Al hacer click sobre cada resultado se carga agenda de ese día.</p> 
+                                                                  
+    <div class="titulo_ayuda"> <i class="fa fa-power-off"></i> Salir</div>                                        
+	<p>Se cierra la sesión de usuario y el sistema vuelve a solicitar sus claves para ingresar.</p> 
+                                
+
+                  </p> 
+                    
+                    
+</div>
+
+</div>
+
+</div>
+
+
+
+</div>
+
+</div>
+
+
+
+<div id="view-8" class="view tab">
+<div class="navbar">
+<div class="navbar-inner">
+<div class="center sliding">Descargar Actualización</div>
+<div class="right">
+<a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+</div>
+</div>
+</div>
+
+<div class="pages navbar-through">
+<div data-page="index-8" class="page">
+<div class="page-content">
+
+
+   <div align="center" style="margin-top: 30px;">
+                            <img src="imagenes/logo_Agenda180.png">
+                        </div>
+                        
+
+<div class="content-block">
+<div class="content-block-inner" align="left" id="zona_actualizacion">
+ 
+    
+	</div>
+	</div>
+	</div></div>
+	</div>
+	                
+</div>
+
+
+<div id="view-9" class="view tab">
+<div class="navbar">
+<div class="navbar-inner">
+<div class="center sliding">Resultado de Búsqueda</div>
+<div class="right">
+<a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+</div>
+</div>
+</div>
+
+<div class="pages navbar-through">
+<div data-page="index-9" class="page">
+<div class="page-content">
+                        
+
+<div class="content-block">
+<h4 id="titulo_busqueda"></h4>
+<div class="content-block-inner" align="left" id="zona_resultados_busqueda" >
+    
+	</div>
+	</div>
+	</div></div>
+	</div>
+	                
+</div>
+<!--
+<div class="toolbar tabbar tabbar-labels" >
+<div class="toolbar-inner">
+<a href="#view-3" class="tab-link" ><i class="fa fa-calendar"></i><span class="tabbar-label">Agenda</span></a>
+<a href="#view-2" class="tab-link"> <i class="fa fa-group"></i><span class="tabbar-label">Contactos</span></a>
+<a href="#view-2" class="tab-link"> <i class="fa fa-bell"></i><span class="tabbar-label">Recordatorios</span></a>
+<a href="" class="tab-link" onClick="sincronizar();"> <i class="fa fa-refresh"></i><span class="tabbar-label">Sincronizar</span></a>
+<a href="" class="tab-link" onClick="sincronizar();"> <i class="fa fa-life-ring"></i><span class="tabbar-label">Ayuda</span></a>
+<a href="" class="tab-link" onClick="sincronizar();"> <i class="fa fa-info-circle"></i><span class="tabbar-label">info</span></a>
+<a href="" class="tab-link" onclick="salir();"> <i class="fa fa-power-off"></i><span class="tabbar-label">Salir</span></a>
+</div>
+</div>
+
+-->
+
+<div class="toolbar tabbar tabbar-labels" >
+<div class="toolbar-inner" id="zona_busqueda">
+	<i class="fa fa-clock" onClick="buscar('asunto','cita');"></i> 
+	<i class="fa fa-phone" onClick="buscar('asunto','llamada');"></i> 
+	<i class="fa fa-envelope" onClick="buscar('asunto','email');"></i> 
+	<i class="fa fa-book" onClick="buscar('asunto','capacitacion');"></i> 
+	<i class="fa fa-cube" onClick="buscar('asunto','pedido');"></i>
+	<i class="fa fa-cubes" onClick="buscar('asunto','entregas');"></i> 
+	<i class="fa fa-heart" onClick="buscar('asunto','personal');"></i>
+	
+	
+<input type="text" placeholder="buscar" id="campo_buscar"> <i class="fa fa-search" onClick="buscar('texto','')"></i>
+</div>
+</div>
+
+</div>
+	
+	
+	
+	
+	
+ 
+
+	
+<script type="text/javascript" src="cordova.js"></script>
+    
+    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+      
+    <script type="text/javascript" src="js/app.js"></script>
+    
+    
+
+</body>
+</html>

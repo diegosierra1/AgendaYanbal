@@ -1,0 +1,27 @@
+
+Hora: <span class="editar_hora"></span> : <select id="minutos_base" onChange="guardar_agenda('minutos', this.value);">
+<option value="00">00</option>
+<option value="15">15</option>
+<option value="30">30</option>	
+<option value="45">45</option>
+</select> | <i class="fa fa-trash-alt borrar" onClick="mostrar_borrar_agenda()"></i>
+<button class="col button button-fill color-red" id="boton_borrar" onClick="borrar_agenda()"> Borra este Registro AQUI</button>
+
+<select id="asunto_base" onChange="guardar_agenda('asunto', this.value);">
+<option value="">Asunto</option>
+<option value="cita">cita</option>
+<option value="llamada">llamada</option>
+<option value="email">email</option>
+<option value="capacitacion">capacitación</option>
+<option value="pedido">recibir pedido</option>
+<option value="entregas">hacer entregas</option>
+<option value="personal">personal</option>
+</select> 
+
+<input type="text" id="contacto_base" placeholder="contacto" onKeyUp="guardar_agenda('contacto', this.value);"> 
+
+
+<input type="text" id="lugar_base" placeholder="en qué lugar?" onKeyUp="guardar_agenda('lugar', this.value);"> 
+
+<textarea class="zona_nota" placeholder="escriba aquí" onKeyUp="guardar_agenda('texto', this.value);"></textarea>
+
