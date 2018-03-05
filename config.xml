@@ -22,10 +22,10 @@
         <preference name="android-minSdkVersion" value="14" />
         <allow-intent href="market:*" />
     </platform>
-<icon platform="android" src="icon/36X36.png" density="ldpi" width="36" height="36"/>
-<icon platform="android" src="icon/48X48.png" density="mdpi" width="48" height="48"/>
-<icon platform="android" src="icon/72X72.png" density="hdpi" width="72" height="72"/>
-<icon platform="android" src="icon/96X96.png" density="xhdpi" width="96" height="96"/>
+<icon platform="android" src="icon/36x36.png" density="ldpi" width="36" height="36"/>
+<icon platform="android" src="icon/48x48.png" density="mdpi" width="48" height="48"/>
+<icon platform="android" src="icon/72x72.png" density="hdpi" width="72" height="72"/>
+<icon platform="android" src="icon/96x96.png" density="xhdpi" width="96" height="96"/>
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
