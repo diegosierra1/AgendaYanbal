@@ -57,7 +57,7 @@ $$('.internet').css({'color':'#ccc'});
 	localStorage.setItem('conexion',JSON.stringify(conexion));
 }
 //
-setInterval(comprobar_internet,(1000*10));///1 seg =1000 sin los parentesis de la funcion
+setInterval(comprobar_internet,(1000*60));///1 seg =1000 sin los parentesis de la funcion
 
 
 
@@ -383,7 +383,7 @@ var key = JSON.parse(localStorage.getItem('key'));
 	dias=dias/(24*60*60*1000);
 	dias=parseInt(dias);
 	//myApp.alert(usuario_vigencia+'>='+yyyy+'-'+mm+'-'+dd);
-if(dias<0){
+if(dias<0 && usuario_id!==null){
 myApp.confirm('tu suscripción esta vencida, por favor Renuevala','Suscripción Vencida',function(){ renovar(); },'');
 $$('.panel').css({'visibility':'hidden'});		
 $$('.tabbar-labels').hide();
