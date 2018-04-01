@@ -152,3 +152,5 @@ input[type="text"], input[type="number"], select, textarea {
 #compartir_texto{height: 120px;}
 #campo_buscar{width: 40%}
 .ayuda{width: 100%; max-width: 350px; height: auto}
+
+.icono_buscar_on{color: green}

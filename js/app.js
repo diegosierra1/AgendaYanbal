@@ -5,15 +5,11 @@ swipePanel: 'left', //Activamos la acción slide para el menú deslizando el ded
 var $$=Dom7;
 var mainView=myApp.addView('.view-main',{dynamicNavbar:true,domCache:true});
 //var mainView=myApp.addView('.view-main');
-
 //Now we add our callback for initial page
 myApp.onPageInit('index-1', function (page) {
   //Do something here with home page
 bd_iniciar_inicio();
-	
 }).trigger(); //And trigger it right away
-
-
 var hoy = new Date();
 var dd = hoy.getDate();
 if(dd<9){
@@ -42,6 +38,8 @@ var date = new Date(F.replace(/-+/g, '/'));
 return diasSemana[date.getDay()] + ", " + D + " de " + meses[M-1] + " de " + Y;
 }
  
+
+/*
 function comprobar_internet(){
 //myApp.alert('revisando conexion...');	
 	var conexion='';
@@ -58,7 +56,7 @@ $$('.internet').css({'color':'#ccc'});
 }
 //
 setInterval(comprobar_internet,(1000*60));///1 seg =1000 sin los parentesis de la funcion
-
+*/
 
 
 
@@ -188,7 +186,7 @@ var y=2017;
 					//
 				if(AS!==''){
 					var ic=$$('#asunto_'+AS).val();
-				$$('.H'+h+' .asunto_texto').html('<i class="fa fa-'+ic+'"></i> '+AS);
+				$$('.H'+h+' .asunto_texto').html('<i class="fa fa-'+ic+'"></i> '+AS+'*'+agf_id[0]);
 					$$('#Asunto'+h).val(AS);
 				}else{
 				$$('.H'+h+' .asunto_texto').html('');
@@ -214,6 +212,21 @@ var y=2017;
 									
 				$$('.H'+h+' .nota').html(NT);
 				$$('#Nota'+h).val(NT);
+				
+					
+				if(agf_id[0]>0 && agf_id[1]==='si'){
+					
+						$$('.H'+h+' .sincronizar').html('<i class="fa fa-cloud"></i>');
+					}else{	
+						$$('.H'+h+' .sincronizar').html('<i class="fa fa-tablet-alt"></i>');
+					}
+					
+				//myApp.alert(h+':'+agf_id[0])	
+					/*
+					if(agf_id[0]!==''){
+						myApp.alert('ok'+h);
+					}
+					*/
 					//
 				//$$('.H'+h+' .fa-cloud').hide();	
 				//$$('.H'+h+' .fa-tablet-alt').hide();	
@@ -290,7 +303,7 @@ var y=2017;
 		}
 	}
  	
-sincronizar(fecha);
+//sincronizar(fecha);
 myApp.showTab('#view-2');	
 }
 
@@ -298,17 +311,20 @@ myApp.showTab('#view-2');
 
 //// AQUI
 function marcar_calendario(fecha){
+	var paquete_enviado='';
+	var sincronizar_uno = JSON.parse(localStorage.getItem('sincronizar_uno'));
+	var sincronizar_dos = JSON.parse(localStorage.getItem('sincronizar_dos'));
 /// hacemos un recorrido por todas las notas guardadas
 	if(fecha===''){
-var fechaInicio = new Date('2018-01-01');
-var fechaFin    = new Date('2019-12-31');
+var fechaInicio = new Date('2019-12-31');
+var fechaFin    = new Date('2018-01-01');
 }else{
 var fechaInicio = new Date(fecha);
 var fechaFin    = new Date(fecha);	
 }
 	//
-while(fechaFin.getTime() >= fechaInicio.getTime()){
-fechaInicio.setDate(fechaInicio.getDate() + 1);
+while(fechaInicio.getTime() >= fechaFin.getTime()){
+fechaInicio.setDate(fechaInicio.getDate() - 1);
 var YA=fechaInicio.getFullYear();
 var MA=fechaInicio.getMonth() + 1;
 var DA=fechaInicio.getDate();
@@ -328,17 +344,41 @@ var DA=fechaInicio.getDate();
 	var nota_existe=JSON.parse(localStorage.getItem(name_nota));
 		
 		if(nota_existe!==null && nota_existe!=='' && nota_existe!=='||||'){
-		total_notas++;	
+		total_notas++;
+			var nt=nota_existe.split("|");
+			//myApp.alert(nt[5]);
+			if(nt[5]>sincronizar_uno || nt[5]==='no'){
+			paquete_enviado=paquete_enviado+'~'+user_id+'|'+f+'|'+h+'|'+nota_existe;
+			}
 		}
 	}
 if(total_notas!==0){
 var fxx= f.split("-");
 var dxx=parseInt(fxx[2]);
-$$('#'+f).html('<div class="campana">'+dxx+'<span class="alerta">'+total_notas+'</span></div>');	
+$$('#'+f).html('<div class="campana">'+dxx+'<span class="alerta">'+total_notas+'</span></div>');
+	
 }
 	//
 }
 	
+	//myApp.alert(paquete_enviado,'sincronizar enviado');
+	
+	/// revisar aqui el proceso
+	$$.post('http://yanbal.agendamia.com/conecta.php',{sincronizar_todo:'si', usuario_id:user_id, paquete:paquete_enviado,sincronizar_uno:sincronizar_uno,sincronizar_dos:sincronizar_dos}, function(datax){
+	//myApp.alert(datax,'sincronizar recibido');
+		var nt=datax.split("~");
+		if(nt[0]==='OK'){
+			var n=0;
+			while(n<1000){
+				n++;
+			var ntB=nt[n].split("|");
+			var valor_final=ntB[3]+'|'+ntB[4]+'|'+ntB[5]+'|'+ntB[6]+'|'+ntB[7];
+localStorage.setItem('ID'+user_id+'Agenda'+ntB[1]+'_'+ntB[2],JSON.stringify(valor_final));
+			}
+	
+	}	
+		
+	});
 	
 }
 /// FIN AQUI
@@ -352,10 +392,11 @@ function renovar(){
 
 function bd_iniciar_inicio(){
 	/////******
-comprobar_internet();
+//comprobar_internet();
 	/////******
 var hoy = new Date();
 var dd = hoy.getDate();
+var now=(hoy.getTime())/1000;
 if(dd<9){
 	dd='0'+dd;
 }
@@ -378,6 +419,16 @@ var sesion = JSON.parse(localStorage.getItem('sesion'));
 var link = JSON.parse(localStorage.getItem('link'));
 var key = JSON.parse(localStorage.getItem('key'));	
 //
+	var sincronizar_uno = JSON.parse(localStorage.getItem('sincronizar_uno'));
+	var sincronizar_dos = JSON.parse(localStorage.getItem('sincronizar_dos'));
+	
+	if(sincronizar_uno===null || sincronizar_uno===''){
+	sincronizar_uno=0;
+	sincronizar_dos=now;
+	localStorage.setItem('sincronizar_uno',JSON.stringify(0));
+	localStorage.setItem('sincronizar_dos',JSON.stringify(now));	
+	}
+	//
 	var limite = new Date(usuario_vigencia);
 	var dias=limite.getTime() - hoy.getTime();
 	dias=dias/(24*60*60*1000);
@@ -389,7 +440,7 @@ $$('.panel').css({'visibility':'hidden'});
 $$('.tabbar-labels').hide();
 	return;
 	
-}else if(dias<=30 && dias>=0){
+}else if(dias<=30 && dias>=0  && usuario_id!==null){
 myApp.confirm('tu suscripción esta por vencer en '+dias+' días. Quieres Renovarla?','Renueva tu Suscripción',function(){ renovar(); },'');
 $$('.panel').css({'visibility':'hidden'});		
 $$('.tabbar-labels').hide();	
@@ -399,22 +450,28 @@ $$('.tabbar-labels').hide();
 //myApp.alert('cargando...'+usuario_nombre+' - Version: '+version,'bienvenido'); 
 $$('.identificacion').html(usuario_nombre+' (Vence: '+usuario_vigencia+')');
 $$('.nombre_usuario').html(usuario_nombre);
+$$('.email_usuario').html(usuario_email);		
 $$('.fecha_vigencia').html(usuario_vigencia);
-
+$$('.version_actual').html(version);
 //myApp.alert(md5);
 //$$('.nombre_usuario').html(key);		
-$$('#renovar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+usuario_id+'&cod='+key);		
+$$('#renovar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+usuario_id+'&cod='+key);	
+			
 //$$('#zona_calendario').load('campanas2018.html');
 $$.post('campanas.html', {}, function (data) {        
 $$('#zona_calendario').html(data); 
 cargar_fecha(yyyy+'-'+mm+'-'+dd);
 	//
-	marcar_calendario('');
+marcar_calendario('');		
+	//sincronizar('');
     });
 $$('.panel').css({'visibility':'visible'});
 $$('.tabbar-labels').show();	
 //$$('#boton-1').click();
 myApp.showTab('#view-2');
+	//
+	
+//sincronizar();
     }else{
 //myApp.alert('ingrese por favor','error'); 
 $$('.panel').css({'visibility':'hidden'});		
@@ -460,8 +517,8 @@ var email=$$('#email').val();
 var clave=$$('#clave').val();
 var clave2=$$('#clave2').val();	
 var tipo=$$('#tipo_ingreso').val();
-var version = JSON.parse(localStorage.getItem('version'));
-var conexion = JSON.parse(localStorage.getItem('conexion'));	
+var version = 1.01;
+//var conexion = JSON.parse(localStorage.getItem('conexion'));	
 //myApp.alert(tipo+'++V'+version);
 	
 	//
@@ -473,7 +530,8 @@ var conexion = JSON.parse(localStorage.getItem('conexion'));
     }else{
 			
 	
-		if(conexion==='on'){
+		//if(conexion==='on'){
+			if(navigator.onLine){
 	//
 	//myApp.alert('enviando','procesando');
 	$$.post('http://yanbal.agendamia.com/conecta.php',{ingreso:tipo,email:email,clave:clave,version:version},function(data){
@@ -486,12 +544,16 @@ var conexion = JSON.parse(localStorage.getItem('conexion'));
 	localStorage.setItem('usuario_nombre',JSON.stringify(respuesta[2]));
 	localStorage.setItem('usuario_email',JSON.stringify(respuesta[3]));	
 	localStorage.setItem('usuario_vigencia',JSON.stringify(respuesta[4]));
-	localStorage.setItem('version',JSON.stringify(respuesta[5]));
+	localStorage.setItem('version',JSON.stringify(version));
 	localStorage.setItem('estado',JSON.stringify(respuesta[6]));
 	localStorage.setItem('usuario_clave',JSON.stringify(clave));
 	localStorage.setItem('sesion',JSON.stringify('on'));
 	localStorage.setItem('link',JSON.stringify(respuesta[7]));	
 	localStorage.setItem('key',JSON.stringify(respuesta[8]));
+		/// si hay una nueva version se da aviso
+		if(version!=respuesta[5]){
+			myApp('Hay una Nueva versión Disponible. Descargala desde el botón "Actualizar App"','Nueva Versión');
+		}
 		//
 		bd_iniciar_inicio();
 	
@@ -499,14 +561,15 @@ var conexion = JSON.parse(localStorage.getItem('conexion'));
 		myApp.alert(respuesta[1],respuesta[0]); 
 	}
 		});
-		}else if(conexion==='off'){
+		}else{
+			// conexion off
 		var mi_email = JSON.parse(localStorage.getItem('usuario_email'));
 		var mi_clave = JSON.parse(localStorage.getItem('usuario_clave'));
 		//// si estan vacias se indica que se necesita conexion a internet
 		if(mi_email!==null || mi_clave!==null){
-		myApp.alert('Por favor revise su conexión a internet');	
+		myApp.alert('Por favor revise su conexión a internet', 'problema');	
 		}else if(email!==mi_email || clave!==mi_clave){
-		myApp.alert('Error en su clave o email');		
+		myApp.alert('Error en su clave o email','error');		
 		}else if(email===mi_email || clave===mi_clave){
 		localStorage.setItem('sesion',JSON.stringify('on'));
 		//
@@ -533,8 +596,10 @@ var key = JSON.parse(localStorage.getItem('key'));
 		
     }
 	}else if(tipo==='nuevo'){
-		
-		if(conexion==='off'){
+		if(navigator.onLine){
+			
+		}else {		
+			//if(conexion==='off'){
 			myApp.alert('Por favor revise su conexión a internet','error en conexión');
 			return;
 		}
@@ -565,7 +630,10 @@ var key = JSON.parse(localStorage.getItem('key'));
     
 	}else if(tipo==='recordar'){
 		
-		if(conexion==='off'){
+		if(navigator.onLine){
+			
+		}else{
+		//if(conexion==='off'){
 			myApp.alert('Por favor revise su conexión a internet','error en conexión');
 			return;
 		}
@@ -797,8 +865,11 @@ guardar_agenda('lugar','');
 
 ///////////************************
 function sincronizar(fecha){
-	var conexion = JSON.parse(localStorage.getItem('conexion'));
-if(conexion==='on'){	
+	//myApp.preloader.show();
+	//myApp.alert(fecha);
+	//var conexion = JSON.parse(localStorage.getItem('conexion'));
+//if(conexion==='on'){	
+	if(navigator.onLine){
 /// hacemos un recorrido por todas las notas guardadas
 if(fecha===''){
 var fechaInicio = new Date('2018-01-01');
@@ -828,10 +899,10 @@ var DA=fechaInicio.getDate();
 	var name_nota='ID'+user_id+'Agenda'+f+'_'+h;
 	var nota_existe=JSON.parse(localStorage.getItem(name_nota));
 	//
-		var name_nota_id='ID'+user_id+'Agenda'+f+'_'+h+'id';
+	var name_nota_id='ID'+user_id+'Agenda'+f+'_'+h+'id';
 	var nota_existe_id=JSON.parse(localStorage.getItem(name_nota_id));
 	
-		var conexion = JSON.parse(localStorage.getItem('conexion'));
+		//var conexion = JSON.parse(localStorage.getItem('conexion'));
 		
 		if(nota_existe!==null){
 			
@@ -841,15 +912,13 @@ var DA=fechaInicio.getDate();
 			agf_id='';	
 			}
 	///////////////////////////////////////***
-		//myApp.alert(agf_id[0]+'+'+agf_id[1]);
-					if(agf_id[0]>0 && agf_id[1]==='si'){
-					
-						$$('.H'+h+' .sincronizar').html('<i class="fa fa-cloud"></i>');
-					}else{
+		
+						//myApp.alert(f+'/'+h+'>'+agf_id[0]);
 						/// primero tratamos de enviar a la nube
 					
 						//conexion='off';
-						if(conexion==='on'){
+						//if(conexion==='on'){
+							if(navigator.onLine){
 						//myApp.alert('sincronizando...');
 							///OJO con Nota
 						var agenda_id=agf_id[0];
@@ -866,7 +935,7 @@ var DA=fechaInicio.getDate();
 						
 						$$.post('http://yanbal.agendamia.com/conecta.php',{sincronizar_nota:'si', usuario_id:user_id, fecha:f, hora:h, nota:nota_existe, agenda_id:agenda_id, agenda_time:agenda_time}, function(datax){
 //	
-			//myApp.alert('HB:'+datax);				
+			//myApp.alert(f+'/'+h+':'+datax);				
 							
 		//myApp.alert('HB:'+h);				
 	var rx = datax.split("|");
@@ -887,16 +956,16 @@ var DA=fechaInicio.getDate();
 							
 							//myApp.alert('HC:'+h);
 						//	
-						}else if(conexion!=='on'){
-						
+						}else {
+						//if(conexion!=='on'){
 							$$('.H'+h+' .sincronizar').html('<i class="fa fa-tablet-alt"></i>');
 						}
-					}
+					
 		////////////////////////////////////****
 		}else if(nota_existe===null){
 		/// se envia consulta para verifiar que no haya registro desde otro dispositivo	
-				if(conexion==='on'){
-						
+				//if(conexion==='on'){
+					if(navigator.onLine){	
 						$$.post('http://yanbal.agendamia.com/conecta.php',{sincronizar_nota:'si', usuario_id:user_id, fecha:f, hora:h, nota:'', agenda_id:'', agenda_time:0}, function(datax){
 //	
 		//myApp.alert('HB:'+h);				
@@ -930,69 +999,19 @@ guardar_agenda('minutos', rx[5]);
 	//
 }
 }
-	
+//myApp.preloader.hide();	
 }
 ////*************
 
-function sincronizar_vieja(){
-//
-var limite=JSON.parse(localStorage.getItem('encuesta_id'));
-	if(limite===null){
-	limite=100;
-	}
-var outerHTMLx = '';
-var i=0;
-var enviados=0;	
-	
 
-	
-while(i<limite) {
-    i++;
-    var en=JSON.parse(localStorage.getItem('encuesta'+i));
-    var rp=JSON.parse(localStorage.getItem('respuestas'+i));
-   //var respuestaS ='';
-	
-    if(en!==null) {
-	//myApp.alert(i+':'+en,'test A');	
-$$.post('http://yanbal.agendamia.com/conecta.php',{sincronizar:'si',encuesta:en,respuestas:rp},function(dataS){
-		 	var respuestaS = dataS.split("|");
-	//myApp.alert(respuestaS[0]);
-	//return;
-	
-	outerHTMLx = outerHTMLx +respuestaS[0]+'*'; 
-             if(respuestaS[0]==='OK'){
-			localStorage.setItem('encuesta_enviada'+i,JSON.stringify(respuestaS[1])); 
-			//outerHTMLx = outerHTMLx + '<tr><td>' +i+ '</td><td>Encuesta enviada</td></tr>';
-			enviados++;	
-			//myApp.alert('B:'+respuestaS[0]);
-             }else if(respuestaS[0]==='YA'){
-			localStorage.setItem('encuesta_enviada'+i,JSON.stringify(respuestaS[1])); 
-			//myApp.alert('C:'+respuestaS[0]);
-             }
-    //myApp.alert(respuestaS[1],'sincronizacion');
-    reporte_encuestas(); 
-         });
-        ///
-                    }
-	
-      if(i===limite){
-		myApp.alert((i-1)+' encuestas analizadas','sincronizacion');
-	
-		  
-	  } 
-    //
-}
 
-           
-}
 
 
 function actualizar_fecha_vencimiento(){
-var conexion = JSON.parse(localStorage.getItem('conexion'));
+//var conexion = JSON.parse(localStorage.getItem('conexion'));
 	//
-	if(conexion==='off'){
-		myApp.alert('Por favor revisa tu conexión a internet','error en conexión');
-	}else if(conexion==='on'){
+	//if(conexion==='on'){
+		if(navigator.onLine){
 	var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));
 		$$.post('http://yanbal.agendamia.com/conecta.php',{actualizar_vencimiento:'si',usuario_id:usuario_id},function(dataV){
 		 	var respuestaV = dataV.split("|");
@@ -1004,6 +1023,9 @@ var conexion = JSON.parse(localStorage.getItem('conexion'));
 				myApp.alert(respuestaV[1],respuestaV[0]);
 			}
 		});
+	}else {
+		// if(conexion==='off')
+		myApp.alert('Por favor revisa tu conexión a internet','error en conexión');
 	}
 }
 
@@ -1027,8 +1049,10 @@ window.location='index.html';
 }
 
 function buscar(tipo,texto){
+$('.icono_buscar').removeClass('icono_buscar_on');	
 if(tipo==='asunto'){
 $$('#titulo_busqueda').html('Buscando Asunto: '+texto);	
+$('.icono_'+texto).addClass('icono_buscar_on');	
 }
 if(tipo==='texto'){
 $$('#titulo_busqueda').html('Buscando: '+texto);
@@ -1133,6 +1157,106 @@ var DA=fechaInicio.getDate();
 	$$('#zona_resultados_busqueda').html(resultado);
 	myApp.showTab('#view-9');
 }
+
+
+
+function compartir(){
+	
+var amigo=$$('#compartir_nombre').val();
+var amigo_email=$$('#compartir_email').val();	
+var amigo_texto=$$('#compartir_texto').val();
+	//
+	if(amigo==='' || amigo_email==='' || amigo_texto===''){
+		myApp.alert('complete los datos por favor','error');
+	}else{
+	if(navigator.onLine){	
+	$$.post('http://yanbal.agendamia.com/conecta.php',{compartir:'si', usuario_id:user_id, amigo:amigo, email:amigo_email, texto:amigo_texto}, function(respuesta){
+	var rs=respuesta.split('|');
+	myApp.alert(rs[1],rs[0]);	
+	});
+	}else{
+	myApp.alert('revisa tu conexión a internet','error');	
+	}
+		}
+			
+}
+
+
+function calcular_regalo(){
+var cantidad=Number($$('#regalar').val());
+var descuento=0;
+	if(cantidad>9){
+		descuento=5;
+	}
+var total_regalo=(cantidad*12000)*((100-descuento)/100);
+$$('#precio_regalo').html('$ '+total_regalo);
+$$('#total_regalo').val(total_regalo);
+	regalar_suscripcion();
+}
+
+function regalar_suscripcion(){
+//
+var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));
+var key = JSON.parse(localStorage.getItem('key'));
+var cantidad=$$('#regalar').val();
+//
+	if(cantidad==='' || cantidad===0){
+	myApp.alert('falta la cantidad de suscripciones que deseas obsequiar','error');
+	}else{
+		if(navigator.onLine){
+$$('#regalar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+usuario_id+'&cod='+key+'&regalo='+cantidad);	
+		}else{
+	myApp.alert('revisa tu conexión a internet','error');		
+		}
+//
+//
+	}
+	/**/
+}
+
+
+function buscar_actualizacion(){
+var version = JSON.parse(localStorage.getItem('version'));
+if(navigator.onLine){	
+	$$.post('http://yanbal.agendamia.com/conecta.php',{actualizar:'si', version_actual:version_actual}, function(respuesta){
+	var rs=respuesta.split('|');
+	if(rs[0]==='OK'){
+	$$('#zona_actualizacion').show();
+	$$('#zona_no_actualizacion').hide();	
+	$$('#version_nueva').html(rs[1]);
+	$$('#notas_nueva_versión').html(rs[2]);	
+	}else{
+	$$('#zona_actualizacion').hide();
+	$$('#zona_no_actualizacion').show();
+	}	
+	});
+	}else{
+	myApp.alert('revisa tu conexión a internet','error');	
+	}	
+}
+/*
+function regalar_suscripcion(){
+	
+var cantidad=$$('#regalar_cantidad').val();
+var amigo_email=$$('#compartir_email').val();	
+var amigo_texto=$$('#compartir_texto').val();
+	//
+	if(amigo==='' || amigo_email==='' || amigo_texto===''){
+		myApp.alert('complete los datos por favor','error');
+	}else{
+	myApp.alert('procesando ...','espera un momento');	
+	$$.post('http://yanbal.agendamia.com/conecta.php',{compartir:'si', usuario_id:user_id, amigo:amigo, email:amigo_email, texto:amigo_texto}, function(respuesta){
+	var rs=respuesta.split('|');
+	myApp.alert(rs[1],rs[0]);	
+	});
+		}
+			
+}
+*/
+
+
+
+
 
 function pulsar(obj,name,valor,base) {
     if (!obj.checked) return

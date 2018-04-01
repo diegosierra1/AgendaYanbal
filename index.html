@@ -21,6 +21,8 @@
 
 </head>
 <body>
+
+
 <input type="hidden" id="ingreso_abierto" value="no">
 <div class="statusbar-overlay"></div>
 
@@ -37,12 +39,12 @@
 	</p>
 	<p><a href="#view-2" id="boton-1"  class="tab-link close-panel"><h4><i class="fa fa-calendar-alt"></i> Mi Agenda</h4></a></p>
      <p><a href="#view-3" id="boton-2"  class="tab-link close-panel"><h4><i class="fa fa-bell"></i> Recordatorios</h4></a></p>
-     <p><a href="#" id="boton-3" onClick="sincronizar();" class="tab-link close-panel"><h4><i class="fa fa-plug"></i> Sincronización</h4></a></p>
+     <p><a href="#" id="boton-3" onClick="sincronizar('');" class="tab-link close-panel"><h4><i class="fa fa-plug"></i> Sincronización</h4></a></p>
      <p><a href="#view-4" id="boton-4" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-share-alt"></i> Compartir</h4></a></p>
      <p><a href="#view-5" id="boton-5" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-barcode"></i> Renovar</h4></a></p>
      <p><a href="#view-6" id="boton-6" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-info-circle"></i> Acerca de</h4></a></p>
      <p><a href="#view-7" id="boton-7" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-life-ring"></i> Ayuda</h4></a></p>
-     <p><a href="#view-8" id="boton-8" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-download"></i> Actualizar App</h4></a></p>
+     <p><a href="#view-8" id="boton-8" class="tab-link close-panel" data-view=".view-main" onClick="buscar_actualizacion();"><h4><i class="fa fa-download"></i> Actualizar App</h4></a></p>
      <p><a href="" id="boton-9"  onclick="salir();" class="tab-link close-panel"><h4><i class="fa fa-power-off"></i> Salir</h4></a></p>
                             
 </div>
@@ -75,7 +77,7 @@
 
 <div class="page-content">
 <div align="center" id="zona_logo_home" style="margin-top: 30px;">
-<img src="imagenes/logo_Agenda180.png">  
+<img src="imagenes/logo_Agenda350.png">  
  </div>
                         
 
@@ -179,7 +181,7 @@
 
 <div class="navbar">
 <div class="navbar-inner">
-<div class="center sliding" ><span class="internet"><i class="fa fa-wifi"></i></span> <span class="identificacion"></span></div>
+<div class="center sliding" ><span class="identificacion"></span></div>
 
 <div class="right">
 <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
@@ -247,9 +249,9 @@
 	<div class="agenda_hora">6</div>
     <div class="agenda_pie">AM</div>	
      </td>
-      <td class="dos H6">
+      <td class="dos H6" onClick="editar('6')">
 	
-	<div  onClick="editar('6')" class="zona_editar_agenda">
+	<div class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -268,9 +270,9 @@
 	<div class="agenda_hora">1</div>
     <div class="agenda_pie">PM</div>	
      </td>
-      <td class="dos H13">
+      <td class="dos H13"  onClick="editar('13')">
 	
-		  <div  onClick="editar('13')" class="zona_editar_agenda">
+		  <div class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -290,9 +292,9 @@
 	<div class="agenda_hora">7</div>
     <div class="agenda_pie">AM</div>	
      </td>
-      <td class="dos H7">
+      <td class="dos H7"  onClick="editar('7')">
 	
-		   <div  onClick="editar('7')" class="zona_editar_agenda">
+		   <div class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -311,9 +313,9 @@
 	<div class="agenda_hora">2</div>
     <div class="agenda_pie">PM</div>	
      </td>
-      <td class="dos H14">
+      <td class="dos H14"  onClick="editar('14')">
 	
-		   <div  onClick="editar('14')" class="zona_editar_agenda">
+		   <div class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -333,9 +335,9 @@
 	<div class="agenda_hora">8</div>
     <div class="agenda_pie">AM</div>	
      </td>
-      <td class="dos H8">
+      <td class="dos H8"  onClick="editar('8')">
 	
-     <div  onClick="editar('8')" class="zona_editar_agenda">
+     <div class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -354,9 +356,9 @@
 	<div class="agenda_hora">3</div>
     <div class="agenda_pie">PM</div>	
      </td>
-      <td class="dos H15">
+      <td class="dos H15"  onClick="editar('15')">
 	
-		   <div  onClick="editar('15')" class="zona_editar_agenda">
+		   <div class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -376,9 +378,9 @@
 	<div class="agenda_hora">9</div>
     <div class="agenda_pie">AM</div>	
      </td>
-      <td class="dos H9">
+      <td class="dos H9"  onClick="editar('9')">
 	
-		   <div  onClick="editar('9')" class="zona_editar_agenda">
+		   <div class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -397,9 +399,9 @@
 	<div class="agenda_hora">4</div>
     <div class="agenda_pie">PM</div>	
      </td>
-      <td class="dos H16">
+      <td class="dos H16"  onClick="editar('16')">
 	
-		   <div  onClick="editar('16')" class="zona_editar_agenda">
+		   <div class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -419,9 +421,9 @@
 	<div class="agenda_hora">10</div>
     <div class="agenda_pie">AM</div>	
      </td>
-      <td class="dos H10">
+      <td class="dos H10"  onClick="editar('10')">
 	
-		   <div  onClick="editar('10')" class="zona_editar_agenda">
+		   <div class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -440,9 +442,9 @@
 	<div class="agenda_hora">5</div>
     <div class="agenda_pie">PM</div>	
      </td>
-      <td class="dos H17">
+      <td class="dos H17"  onClick="editar('17')">
 	
-		   <div  onClick="editar('17')" class="zona_editar_agenda">
+		   <div class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -462,9 +464,9 @@
 	<div class="agenda_hora">11</div>
     <div class="agenda_pie">AM</div>	
      </td>
-      <td class="dos H11">
+      <td class="dos H11" onClick="editar('11')">
 	
-     <div  onClick="editar('11')" class="zona_editar_agenda">
+     <div  class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -483,9 +485,9 @@
 	<div class="agenda_hora">6</div>
     <div class="agenda_pie">PM</div>	
      </td>
-      <td class="dos H18">
+      <td class="dos H18" onClick="editar('18')">
 	
-		   <div  onClick="editar('18')" class="zona_editar_agenda">
+		   <div  class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -505,9 +507,9 @@
 	<div class="agenda_hora">12</div>
     <div class="agenda_pie">PM</div>	
      </td>
-      <td class="dos H12">
+      <td class="dos H12" onClick="editar('12')">
 	
-     <div  onClick="editar('12')" class="zona_editar_agenda">
+     <div  class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -526,9 +528,9 @@
 	<div class="agenda_hora">7</div>
     <div class="agenda_pie">PM</div>	
      </td>
-      <td class="dos H19">
+      <td class="dos H19" onClick="editar('19')">
 	
-		   <div  onClick="editar('19')" class="zona_editar_agenda">
+		   <div  class="zona_editar_agenda">
   <div class="agenda_asuntos"> <span class="asunto_texto"></span> <span class="hora"></span>
 		  </div>
    <div class="agenda_contacto"><i class="fa fa-user"></i> <span class="contacto"></span></div>
@@ -661,19 +663,34 @@ xxxx
 <div class="content-block">
 <div class="content-block-inner" align="center">
  <p><span class="nombre_usuario"></span><br>
-Fecha de Vencimiento de tu suscripción: <span class="fecha_vigencia"></span>
+Fecha de Vencimiento de tu suscripción: <span class="fecha_vigencia"></span> <i class="fa fa-sync-alt" onclick="actualizar_fecha_vencimiento();"></i>
+<!--
 <br>
  <input type="button" class="button button-fill color-green" onclick="actualizar_fecha_vencimiento();" value="Actualizar Fecha Vencimiento"> 
+ -->
   </p>
-   
+   <div style="border: dotted 1px #333; padding: 8px;">
   <h3>Renovar Suscripción por 1 año</h3>
   <h2>$ 12.000</h2>
-		
-     <a href="#" class="external" target="_system" id="renovar_ahora">Renueva Ahora</a>
+<a href="#" class="external" target="_system" id="renovar_ahora"><i class="fa fa-shopping-cart"></i> Renueva Ahora</a>
+	</div>
      
+      <div style="border: dotted 1px #333; padding: 8px; margin-top: 20px;">
+ 	<h4 style="margin: 0px;">Regalar Suscripciones: <input type="number" name="regalar" id="regalar" style="width: 30px;" value="" placeholder="0" onKeyUp="calcular_regalo()"></h4>
+ 	<h6 style="margin: 0px;">* Debes enviar el listado en Excel de los nombres y los emails de cada persona al correo: soporte@indexdream.com desde tu correo <span class="email_usuario"></span></h6>
+ 	<h2 id="precio_regalo">$ 0</h2>
+ 	<input type="hidden" id="total_regalo" value="0">
+
+<a href="#" class="external" target="_system" id="regalar_ahora"><i class="fa fa-shopping-cart"></i> Pagar Regalo Ahora</a> 	
+ </div>
+    
      
+     </div>
  
-	</div></div>
+ 
+
+ 
+	</div>
 	</div></div>
 	</div>
 	                
@@ -809,15 +826,21 @@ Cuando hay actualizaciones disponibles de la aplicación al iniciar se da la opc
 
 
    <div align="center" style="margin-top: 30px;">
-                            <img src="imagenes/logo_Agenda180.png">
-                        </div>
+  <img src="imagenes/logo_Agenda350.png">
+ </div>
                         
 
 <div class="content-block">
+Versión Instalada: <strong><span class="version_actual"></span></strong><br>
+
 <div class="content-block-inner" align="left" id="zona_actualizacion">
- 
-    
-	</div>
+Última Versión Disponible: <strong><span class="version_nueva"></span></strong> <br>
+<a href="https://build.phonrgap.com/apps/3027271/install/1icWKeLTqPA8yxHuUVqW" class="external" target="_system"><i class="fa fa-download"></i> Descargar</a> <br>
+Notas de la versión: <br>
+	<div id="notas_nueva_versión"></div>	
+</div>
+<div class="content-block-inner" align="left" id="zona_no_actualizacion">No te preocupes, tienes la última versión instalada.</div>
+
 	</div>
 	</div></div>
 	</div>
@@ -867,13 +890,13 @@ Cuando hay actualizaciones disponibles de la aplicación al iniciar se da la opc
 
 <div class="toolbar tabbar tabbar-labels" >
 <div class="toolbar-inner" id="zona_busqueda">
-	<i class="fa fa-clock" onClick="buscar('asunto','cita');"></i> 
-	<i class="fa fa-phone" onClick="buscar('asunto','llamada');"></i> 
-	<i class="fa fa-envelope" onClick="buscar('asunto','email');"></i> 
-	<i class="fa fa-book" onClick="buscar('asunto','capacitacion');"></i> 
-	<i class="fa fa-cube" onClick="buscar('asunto','pedido');"></i>
-	<i class="fa fa-cubes" onClick="buscar('asunto','entregas');"></i> 
-	<i class="fa fa-heart" onClick="buscar('asunto','personal');"></i>
+	<i class="fa fa-clock icono_buscar icono_cita" onClick="buscar('asunto','cita');"></i> 
+	<i class="fa fa-phone icono_buscar icono_llamada" onClick="buscar('asunto','llamada');"></i> 
+	<i class="fa fa-envelope icono_buscar icono_email" onClick="buscar('asunto','email');"></i> 
+	<i class="fa fa-book icono_buscar icono_capacitacion" onClick="buscar('asunto','capacitacion');"></i> 
+	<i class="fa fa-cube icono_buscar icono_pedido" onClick="buscar('asunto','pedido');"></i>
+	<i class="fa fa-cubes icono_buscar icono_entregas" onClick="buscar('asunto','entregas');"></i> 
+	<i class="fa fa-heart icono_buscar icono_personal" onClick="buscar('asunto','personal');"></i>
 	
 	
 <input type="text" placeholder="buscar" id="campo_buscar"> <i class="fa fa-search" onClick="buscar('texto','')"></i>
