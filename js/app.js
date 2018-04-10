@@ -438,7 +438,7 @@ var tipo=$$('#tipo_ingreso').val();
 var version = 1.01;
 //var conexion = JSON.parse(localStorage.getItem('conexion'));	
 //myApp.alert(tipo+'++V'+version);
-	
+	myApp.alert('441'); 
 	//
 	if(tipo==='ingreso'){
 	//myApp.alert('A'); 	
@@ -447,9 +447,11 @@ var version = 1.01;
 		return;
     }else{
 			
-	
+	myApp.alert('450');
+		
 		//if(conexion==='on'){
 			if(navigator.onLine){
+	myApp.alert('454'); 			
 	//
 	//myApp.alert('validando','procesando');
 	//myApp.alert('enviando','procesando');
@@ -498,7 +500,8 @@ var version = 1.01;
 		
 			bd_iniciar_inicio();
 			
-		}	
+		}
+			myApp.alert('504'); 
 		}
 		
     }
