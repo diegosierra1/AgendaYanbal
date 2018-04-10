@@ -39,25 +39,6 @@ return diasSemana[date.getDay()] + ", " + D + " de " + meses[M-1] + " de " + Y;
 }
  
 
-/*
-function comprobar_internet(){
-//myApp.alert('revisando conexion...');	
-	var conexion='';
-if(navigator.onLine){
-//myApp.alert('Online');
-$$('.internet').css({'color':'green'});
-	conexion='on';
-} else {
-//myApp.alert('Offline')
-$$('.internet').css({'color':'#ccc'});
-	conexion='off';
-}
-	localStorage.setItem('conexion',JSON.stringify(conexion));
-}
-//
-setInterval(comprobar_internet,(1000*60));///1 seg =1000 sin los parentesis de la funcion
-*/
-
 
 
 function cargar_campana(ref){
@@ -221,80 +202,7 @@ var y=2017;
 						$$('.H'+h+' .sincronizar').html('<i class="fa fa-tablet-alt"></i>');
 					}
 					
-				//myApp.alert(h+':'+agf_id[0])	
-					/*
-					if(agf_id[0]!==''){
-						myApp.alert('ok'+h);
-					}
-					*/
-					//
-				//$$('.H'+h+' .fa-cloud').hide();	
-				//$$('.H'+h+' .fa-tablet-alt').hide();	
-				
-					/*
-					if(Mi!=='' || AS!=='' || CT!=='' || LG!=='' || NT!==''){
-					
-						//myApp.alert(agf_id[0]+'+'+agf_id[1]);
-					if(agf_id[0]>0 && agf_id[1]==='si'){
-					
-						$$('.H'+h+' .sincronizar').html('<i class="fa fa-cloud"></i>');
-					}else{
-						/// primero tratamos de enviar a la nube
-					var conexion = JSON.parse(localStorage.getItem('conexion'));
-						//conexion='off';
-						if(conexion==='on'){
-						//myApp.alert('sincronizando...');
-							///OJO con Nota
-						var agenda_id=agf_id[0];
-						var agenda_time=agf_id[2];
-						//myApp.alert('HAA:'+h+' S:'+agenda_time);	
-						if(agenda_time===null || agenda_time==='' || agenda_time===undefined ){
-							var tmpDate = new Date(); 
-						agenda_time= tmpDate.getTime();	
-						agenda_time=parseInt(agenda_time/1000);	
-						}	
-						
-						//myApp.alert('HA:'+h+' S:'+agenda_time);
-						$$('.H'+h+' .sincronizar').html('<i class="fa fa-cloud"></i>');	
-						
-						$$.post('http://yanbal.agendamia.com/conecta.php',{sincronizar_nota:'si', usuario_id:user_id, fecha:fecha, hora:h, nota:ag, agenda_id:agenda_id, agenda_time:agenda_time}, function(datax){
-//	
-			myApp.alert('HB:'+datax);				
-							
-		//myApp.alert('HB:'+h);				
-	var rx = datax.split("|");
-							
-					if(rx[0]==='OK'){
-					//myApp.alert('nube:'+h);	
-					var nt_id=rx[1]+'|'+rx[2]+'|'+rx[3];
-					localStorage.setItem('ID'+user_id+'Agenda'+fecha+'_'+h+'id',JSON.stringify(nt_id));
-					$$('.H'+hx+' .sincronizar').html('<i class="fa fa-cloud"></i>');
-					}else{
-						//myApp.alert('local:'+hx);	
-						$$('.H'+h+' .sincronizar').html('<i class="fa fa-tablet-alt"></i>');
-					}		
-					
-						});
-							
-							
-							
-							//myApp.alert('HC:'+h);
-						//	
-						}else if(conexion!=='on'){
-						
-							$$('.H'+h+' .sincronizar').html('<i class="fa fa-tablet-alt"></i>');
-						}
-					}
-					//
-					}else if(Mi==='' && AS==='' && CT==='' && LG==='' && NT===''){
-					
-					$$('.H'+h+' .sincronizar').html('');	
-					}
-					*/
-					
-					//
-					
-					
+	
 				}				
 			
 				//// fin de cargar registros
@@ -392,6 +300,7 @@ function renovar(){
 
 function bd_iniciar_inicio(){
 	/////******
+	//myApp.alert('ok');
 //comprobar_internet();
 	/////******
 var hoy = new Date();
@@ -407,18 +316,22 @@ if(mm<9){
 var yyyy = hoy.getFullYear();
 	///****
 $$('#year_actual').val(yyyy);
-var fecha_hoy=yyyy+'-'+mm+'-'+dd;	
+//var fecha_hoy=yyyy+'-'+mm+'-'+dd;	
+	//myApp.alert('**');
 //
 var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));
 var usuario_email = JSON.parse(localStorage.getItem('usuario_email'));
 var usuario_nombre = JSON.parse(localStorage.getItem('usuario_nombre'));
 var usuario_vigencia = JSON.parse(localStorage.getItem('usuario_vigencia'));
 var version = JSON.parse(localStorage.getItem('version'));
-var estado = JSON.parse(localStorage.getItem('estado'));
+//var estado = JSON.parse(localStorage.getItem('estado'));
 var sesion = JSON.parse(localStorage.getItem('sesion'));
-var link = JSON.parse(localStorage.getItem('link'));
-var key = JSON.parse(localStorage.getItem('key'));	
+//var link = JSON.parse(localStorage.getItem('link'));
+var key = JSON.parse(localStorage.getItem('key'));
+	//myApp.alert('++');
+var enviar_agenda = JSON.parse(localStorage.getItem('enviar_agenda'));
 //
+	//myApp.alert('--');
 	var sincronizar_uno = JSON.parse(localStorage.getItem('sincronizar_uno'));
 	var sincronizar_dos = JSON.parse(localStorage.getItem('sincronizar_dos'));
 	
@@ -440,19 +353,21 @@ $$('.panel').css({'visibility':'hidden'});
 $$('.tabbar-labels').hide();
 	return;
 	
-}else if(dias<=30 && dias>=0  && usuario_id!==null){
+}else if(dias<=10 && dias>=0  && usuario_id!==null){// avisa si falta 10 dias para caducar
 myApp.confirm('tu suscripción esta por vencer en '+dias+' días. Quieres Renovarla?','Renueva tu Suscripción',function(){ renovar(); },'');
 $$('.panel').css({'visibility':'hidden'});		
 $$('.tabbar-labels').hide();	
 }
 	//myApp.alert('s:'+sesion); 
 	if(sesion==='on'){
+		//myApp.dialog.preloader();
 //myApp.alert('cargando...'+usuario_nombre+' - Version: '+version,'bienvenido'); 
 $$('.identificacion').html(usuario_nombre+' (Vence: '+usuario_vigencia+')');
 $$('.nombre_usuario').html(usuario_nombre);
 $$('.email_usuario').html(usuario_email);		
 $$('.fecha_vigencia').html(usuario_vigencia);
 $$('.version_actual').html(version);
+$$('#recordatorio').val(enviar_agenda);		
 //myApp.alert(md5);
 //$$('.nombre_usuario').html(key);		
 $$('#renovar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+usuario_id+'&cod='+key);	
@@ -533,6 +448,7 @@ var version = 1.01;
 		//if(conexion==='on'){
 			if(navigator.onLine){
 	//
+	//myApp.alert('validando','procesando');
 	//myApp.alert('enviando','procesando');
 	$$.post('http://yanbal.agendamia.com/conecta.php',{ingreso:tipo,email:email,clave:clave,version:version},function(data){
 //	
@@ -550,12 +466,14 @@ var version = 1.01;
 	localStorage.setItem('sesion',JSON.stringify('on'));
 	localStorage.setItem('link',JSON.stringify(respuesta[7]));	
 	localStorage.setItem('key',JSON.stringify(respuesta[8]));
-		/// si hay una nueva version se da aviso
-		if(version!=respuesta[5]){
-			myApp('Hay una Nueva versión Disponible. Descargala desde el botón "Actualizar App"','Nueva Versión');
-		}
+	localStorage.setItem('enviar_agenda',JSON.stringify(respuesta[9]));	
 		//
 		bd_iniciar_inicio();
+		/// si hay una nueva version se da aviso
+		if(version!==respuesta[5]){
+			myApp('Hay una Nueva versión Disponible. Descargala desde el botón "Actualizar App"','Nueva Versión');
+		}
+		
 	
 	}else{
 		myApp.alert(respuesta[1],respuesta[0]); 
@@ -574,23 +492,7 @@ var version = 1.01;
 		localStorage.setItem('sesion',JSON.stringify('on'));
 		//
 			bd_iniciar_inicio();
-			/*
-var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));
-var usuario_email = JSON.parse(localStorage.getItem('usuario_email'));
-var usuario_nombre = JSON.parse(localStorage.getItem('usuario_nombre'));
-var usuario_vigencia = JSON.parse(localStorage.getItem('usuario_vigencia'));
-var version = JSON.parse(localStorage.getItem('version'));
-var estado = JSON.parse(localStorage.getItem('estado'));
-var sesion = JSON.parse(localStorage.getItem('sesion'));
-var link = JSON.parse(localStorage.getItem('link'));
-var key = JSON.parse(localStorage.getItem('key'));			
 			
-			//
-	$$('.identificacion').html(usuario_nombre+' - Version: '+version);
-	//$$('#zona_calendario').load('campanas2018.html');
-	 //$$('#boton-1').click();
-			myApp.showTab('#view-2');
-			*/
 		}	
 		}
 		
@@ -1234,6 +1136,8 @@ if(navigator.onLine){
 	myApp.alert('revisa tu conexión a internet','error');	
 	}	
 }
+
+
 /*
 function regalar_suscripcion(){
 	
@@ -1254,6 +1158,22 @@ var amigo_texto=$$('#compartir_texto').val();
 }
 */
 
+function cambiar_recordatorio(valor){
+if(navigator.onLine){
+	var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));
+	$$.post('http://yanbal.agendamia.com/conecta.php',{recordatorio:'si', valor:valor, usuario_id:usuario_id}, function(respuesta){
+	
+	if(respuesta==='OK'){
+	localStorage.setItem('enviar_agenda',JSON.stringify(valor));
+	myApp.alert('cambio realizado','actualizacion');	
+	}else{
+	myApp.alert(respuesta,'error');
+	}	
+	});
+	}else{
+	myApp.alert('revisa tu conexión a internet','error');	
+	}	
+}
 
 
 

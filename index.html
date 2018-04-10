@@ -38,7 +38,7 @@
 	<img src="imagenes/logo_Agenda120.png">  
 	</p>
 	<p><a href="#view-2" id="boton-1"  class="tab-link close-panel"><h4><i class="fa fa-calendar-alt"></i> Mi Agenda</h4></a></p>
-     <p><a href="#view-3" id="boton-2"  class="tab-link close-panel"><h4><i class="fa fa-bell"></i> Recordatorios</h4></a></p>
+     <p><a href="#view-3" id="boton-2"  class="tab-link close-panel"><h4><i class="fa fa-bell"></i> Recordatorios por email</h4></a></p>
      <p><a href="#" id="boton-3" onClick="sincronizar('');" class="tab-link close-panel"><h4><i class="fa fa-plug"></i> Sincronización</h4></a></p>
      <p><a href="#view-4" id="boton-4" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-share-alt"></i> Compartir</h4></a></p>
      <p><a href="#view-5" id="boton-5" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-barcode"></i> Renovar</h4></a></p>
@@ -575,7 +575,7 @@
 
 <div class="navbar">
 <div class="navbar-inner">
-<div class="center sliding">Recordatorios</div>
+<div class="center sliding">Recordatorios por email</div>
 <div class="right">
 <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
 </div>
@@ -587,9 +587,12 @@
 <div class="pages navbar-through">
 <div data-page="index-3" class="page">
 <div class="page-content">
-<div class="content-block-title" id="titulo_formulario">Configurar Recordatorios email</div>
+
 <div class="content-block">
-xxxx
+Deseo recibir un email en mi correo <span class="email_usuario"></span> con mi agenda diaria, siempre que tenga algún registro: <select id="recordatorio" onChange="cambiar_recordatorio(this.value)">
+	<option value="si">si</option>
+	<option value="no">no</option>
+</select>
 </div>
 </div>
 
