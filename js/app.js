@@ -24,6 +24,10 @@ var yyyy = hoy.getFullYear();
 var user_id = JSON.parse(localStorage.getItem('usuario_id'));
 
 
+var version = '1.0.1';
+localStorage.setItem('version',JSON.stringify(version));
+
+
 function escribir_fecha(F){
 	var fx=F.split('-');
 	var Y=fx[0];
@@ -167,7 +171,7 @@ var y=2017;
 					//
 				if(AS!==''){
 					var ic=$$('#asunto_'+AS).val();
-				$$('.H'+h+' .asunto_texto').html('<i class="fa fa-'+ic+'"></i> '+AS+'*'+agf_id[0]);
+				$$('.H'+h+' .asunto_texto').html('<i class="fa fa-'+ic+'"></i> '+AS+' '+agf_id[0]);
 					$$('#Asunto'+h).val(AS);
 				}else{
 				$$('.H'+h+' .asunto_texto').html('');
@@ -253,11 +257,19 @@ var DA=fechaInicio.getDate();
 		
 		if(nota_existe!==null && nota_existe!=='' && nota_existe!=='||||'){
 		total_notas++;
+			if(total_notas===1){
+				var sincronizar_dos = f;
+			}
+			
 			var nt=nota_existe.split("|");
 			//myApp.alert(nt[5]);
+			/*
+			//// se sincronizan solo los nuevos registros
 			if(nt[5]>sincronizar_uno || nt[5]==='no'){
 			paquete_enviado=paquete_enviado+'~'+user_id+'|'+f+'|'+h+'|'+nota_existe;
 			}
+			*/
+			paquete_enviado=paquete_enviado+'~'+user_id+'|'+f+'|'+h+'|'+nota_existe;
 		}
 	}
 if(total_notas!==0){
@@ -270,7 +282,7 @@ $$('#'+f).html('<div class="campana">'+dxx+'<span class="alerta">'+total_notas+'
 }
 	
 	//myApp.alert(paquete_enviado,'sincronizar enviado');
-	
+	if(navigator.onLine){
 	/// revisar aqui el proceso
 	$$.post('http://yanbal.agendamia.com/conecta.php',{sincronizar_todo:'si', usuario_id:user_id, paquete:paquete_enviado,sincronizar_uno:sincronizar_uno,sincronizar_dos:sincronizar_dos}, function(datax){
 	//myApp.alert(datax,'sincronizar recibido');
@@ -282,11 +294,15 @@ $$('#'+f).html('<div class="campana">'+dxx+'<span class="alerta">'+total_notas+'
 			var ntB=nt[n].split("|");
 			var valor_final=ntB[3]+'|'+ntB[4]+'|'+ntB[5]+'|'+ntB[6]+'|'+ntB[7];
 localStorage.setItem('ID'+user_id+'Agenda'+ntB[1]+'_'+ntB[2],JSON.stringify(valor_final));
+				
 			}
 	
 	}	
 		
 	});
+	
+	//
+	}
 	
 }
 /// FIN AQUI
@@ -301,7 +317,7 @@ function renovar(){
 function bd_iniciar_inicio(){
 	
 	/////******
-myApp.alert('303');
+//myApp.alert('303');
 //comprobar_internet();
 	/////******
 var hoy = new Date();
@@ -386,16 +402,16 @@ $$('.tabbar-labels').show();
 //$$('#boton-1').click();
 myApp.showTab('#view-2');
 	//
-myApp.alert('389');	
+//myApp.alert('389');	
 //sincronizar();
     }else{
 //myApp.alert('ingrese por favor','error'); 
 $$('.panel').css({'visibility':'hidden'});		
 $$('.tabbar-labels').hide();
-	myApp.alert('395');	
+	//myApp.alert('395');	
 	}
    //
-	myApp.alert('397');
+	//myApp.alert('397');
 }
 
 
@@ -435,10 +451,10 @@ var email=$$('#email').val();
 var clave=$$('#clave').val();
 var clave2=$$('#clave2').val();	
 var tipo=$$('#tipo_ingreso').val();
-var version = 1.01;
+var version = JSON.parse(localStorage.getItem('version'));
 //var conexion = JSON.parse(localStorage.getItem('conexion'));	
 //myApp.alert(tipo+'++V'+version);
-	myApp.alert('441'); 
+	//myApp.alert('441'); 
 	//
 	if(tipo==='ingreso'){
 	//myApp.alert('A'); 	
@@ -447,25 +463,25 @@ var version = 1.01;
 		return;
     }else{
 			
-	myApp.alert('450');
+	//myApp.alert('450');
 		
 		//if(conexion==='on'){
 			if(navigator.onLine){
-	myApp.alert('454'); 			
+	//myApp.alert('454'); 			
 	//
 	//myApp.alert('validando','procesando');
 	//myApp.alert('enviando','procesando');
 	$$.post('http://yanbal.agendamia.com/conecta.php',{ingreso:tipo,email:email,clave:clave,version:version},function(data){
 //	
 	var respuesta = data.split("|");
-	myApp.alert('data:'+data); 	
+	//myApp.alert('data:'+data); 	
 	if(respuesta[0]==='OK'){		
     localStorage.setItem('email',JSON.stringify(email));
     localStorage.setItem('usuario_id',JSON.stringify(respuesta[1]));
 	localStorage.setItem('usuario_nombre',JSON.stringify(respuesta[2]));
 	localStorage.setItem('usuario_email',JSON.stringify(respuesta[3]));	
 	localStorage.setItem('usuario_vigencia',JSON.stringify(respuesta[4]));
-	localStorage.setItem('version',JSON.stringify(version));
+	
 	localStorage.setItem('estado',JSON.stringify(respuesta[6]));
 	localStorage.setItem('usuario_clave',JSON.stringify(clave));
 	localStorage.setItem('sesion',JSON.stringify('on'));
@@ -477,6 +493,7 @@ var version = 1.01;
 		/// si hay una nueva version se da aviso
 		if(version!==respuesta[5]){
 			myApp('Hay una Nueva versión Disponible. Descargala desde el botón "Actualizar App"','Nueva Versión');
+			
 		}
 		
 	
@@ -485,7 +502,7 @@ var version = 1.01;
 	}
 		});
 		}else{
-		myApp.alert('Sin Internet');	
+		//myApp.alert('Sin Internet');	
 			// conexion off
 		var mi_email = JSON.parse(localStorage.getItem('usuario_email'));
 		var mi_clave = JSON.parse(localStorage.getItem('usuario_clave'));
@@ -501,7 +518,7 @@ var version = 1.01;
 			bd_iniciar_inicio();
 			
 		}
-			myApp.alert('504'); 
+			//myApp.alert('504'); 
 		}
 		
     }
@@ -829,7 +846,7 @@ var DA=fechaInicio.getDate();
 						//conexion='off';
 						//if(conexion==='on'){
 							if(navigator.onLine){
-						//myApp.alert('sincronizando...');
+						myApp.alert('sincronizando...','');
 							///OJO con Nota
 						var agenda_id=agf_id[0];
 						var agenda_time=agf_id[2];
@@ -845,7 +862,7 @@ var DA=fechaInicio.getDate();
 						
 						$$.post('http://yanbal.agendamia.com/conecta.php',{sincronizar_nota:'si', usuario_id:user_id, fecha:f, hora:h, nota:nota_existe, agenda_id:agenda_id, agenda_time:agenda_time}, function(datax){
 //	
-			//myApp.alert(f+'/'+h+':'+datax);				
+			myApp.alert(f+'/'+h+':'+datax);				
 							
 		//myApp.alert('HB:'+h);				
 	var rx = datax.split("|");
@@ -914,7 +931,14 @@ guardar_agenda('minutos', rx[5]);
 ////*************
 
 
+function sincronizar_todo(){
+	if(navigator.onLine){	
+	marcar_calendario('');
+	}else{
+	myApp.alert('revisa tu conexión a internet','error');	
+	}
 
+}
 
 
 function actualizar_fecha_vencimiento(){
@@ -965,8 +989,9 @@ $$('#titulo_busqueda').html('Buscando Asunto: '+texto);
 $('.icono_'+texto).addClass('icono_buscar_on');	
 }
 if(tipo==='texto'){
-$$('#titulo_busqueda').html('Buscando: '+texto);
-	texto=$$('#campo_buscar').val();
+texto=$$('#campo_buscar').val();	
+$$('#titulo_busqueda').html('Buscando "'+texto+'":');
+	
 }	
 	
 var resultado='';	
@@ -1026,7 +1051,15 @@ var DA=fechaInicio.getDate();
 				resultado=resultado+'<br></span>';
 			}
 			}else if(tipo==='texto'){
-			var nx=nota_existe.includes( texto );
+				
+				/// pasamos todo a mayusculas para hacer la busqueda y no afecte como se escribe
+var ntexto=texto.toUpperCase();
+var nnota=nota_existe.toUpperCase();				
+//myApp.alert(ntexto);
+   
+			
+				///
+			var nx=nnota.includes( ntexto );
 		
 			if(nx===true){
 				var datos=nota_existe.split('|');
@@ -1127,14 +1160,16 @@ $$('#regalar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+us
 
 function buscar_actualizacion(){
 var version = JSON.parse(localStorage.getItem('version'));
+	//myApp.alert(version);
 if(navigator.onLine){	
-	$$.post('http://yanbal.agendamia.com/conecta.php',{actualizar:'si', version_actual:version_actual}, function(respuesta){
+	$$.post('http://yanbal.agendamia.com/conecta.php',{actualizar:'si', version_actual:version}, function(respuesta){
+	//myApp.alert(respuesta);	
 	var rs=respuesta.split('|');
 	if(rs[0]==='OK'){
 	$$('#zona_actualizacion').show();
 	$$('#zona_no_actualizacion').hide();	
-	$$('#version_nueva').html(rs[1]);
-	$$('#notas_nueva_versión').html(rs[2]);	
+	$$('.version_nueva').html(rs[1]);
+	$$('#notas_nueva_version').html(rs[2]);	
 	}else{
 	$$('#zona_actualizacion').hide();
 	$$('#zona_no_actualizacion').show();

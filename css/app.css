@@ -154,3 +154,5 @@ input[type="text"], input[type="number"], select, textarea {
 .ayuda{width: 100%; max-width: 350px; height: auto}
 
 .icono_buscar_on{color: green}
+
+#zona_actualizacion{display: none}

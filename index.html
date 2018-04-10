@@ -39,7 +39,7 @@
 	</p>
 	<p><a href="#view-2" id="boton-1"  class="tab-link close-panel"><h4><i class="fa fa-calendar-alt"></i> Mi Agenda</h4></a></p>
      <p><a href="#view-3" id="boton-2"  class="tab-link close-panel"><h4><i class="fa fa-bell"></i> Recordatorios por email</h4></a></p>
-     <p><a href="#" id="boton-3" onClick="sincronizar('');" class="tab-link close-panel"><h4><i class="fa fa-plug"></i> Sincronización</h4></a></p>
+     <p><a href="#" id="boton-3" onClick="sincronizar_todo();" class="tab-link close-panel"><h4><i class="fa fa-plug"></i> Sincronización</h4></a></p>
      <p><a href="#view-4" id="boton-4" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-share-alt"></i> Compartir</h4></a></p>
      <p><a href="#view-5" id="boton-5" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-barcode"></i> Renovar</h4></a></p>
      <p><a href="#view-6" id="boton-6" class="tab-link close-panel" data-view=".view-main"><h4><i class="fa fa-info-circle"></i> Acerca de</h4></a></p>
@@ -723,17 +723,20 @@ Fecha de Vencimiento de tu suscripción: <span class="fecha_vigencia"></span> <i
 
 <div class="content-block">
 <div class="content-block-inner" align="center">
- <strong>Versión de la Apliacción: <span class="version"></span></strong><br>
- Esta es una aplicación Desarrollada por IndexDream.<br>
+ <strong>Versión de la Apliacción: <span class="version_actual"></span></strong><br>
+	<a href="http://yanbal.agendamia.com" class="external" target="_system">http://yanbal.agendamia.com</a><br><br>
+ 
+ Esta es una aplicación Desarrollada por IndexDream.
 <br>
-www.indexdream.com
+	<a href="http://www.indexdream.com" class="external" target="_system">www.indexdream.com</a>
  <br>
   <br>
    <img src="imagenes/logo_IndexDream.png">
     <br><br>
     <h4>Terminos y Condiciones</h4>
+    Esta aplicación no tiene relación con la marca registrada de Yanbal ni ninguna de las compañías que la representan.<br><br>
     Toda la información y los datos personales registrados en nuestro sistema son completamente confidenciales y de ninguna maneran seran compartidos con terceros por ningún motivo, salvo orden Judicial. <br><br>
-    No tenemos ningúna clase de responsabilidad por cualquier inconveniente que resulte de un mal manejo de esta aplicación, por perdida de datos, o daño en hardware o Sotware del dispositivo en que se instale.
+    Esta aplicación ha sido Probada y Revisada y en ningún caso se afecto el software y/o el hardware de los dispositivos de prueba, sin embargo No asumimos ningúna clase de responsabilidad por cualquier inconveniente que resulte de un mal manejo de esta aplicación, por perdida de datos, o daño en hardware o Sotware del dispositivo en que se instale.
 	</div></div>
 	</div></div>
 	</div>
@@ -838,9 +841,11 @@ Versión Instalada: <strong><span class="version_actual"></span></strong><br>
 
 <div class="content-block-inner" align="left" id="zona_actualizacion">
 Última Versión Disponible: <strong><span class="version_nueva"></span></strong> <br>
-<a href="https://build.phonrgap.com/apps/3027271/install/1icWKeLTqPA8yxHuUVqW" class="external" target="_system"><i class="fa fa-download"></i> Descargar</a> <br>
+<a href="https://build.phonegap.com/apps/3027271/install/1icWKeLTqPA8yxHuUVqW" class="external" target="_system"><i class="fa fa-download"></i> Descargar</a> <br><br>
+<img src="imagenes/chart.png">
+<br><br>
 Notas de la versión: <br>
-	<div id="notas_nueva_versión"></div>	
+	<div id="notas_nueva_version"></div>	
 </div>
 <div class="content-block-inner" align="left" id="zona_no_actualizacion">No te preocupes, tienes la última versión instalada.</div>
 
