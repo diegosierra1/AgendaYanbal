@@ -299,8 +299,9 @@ function renovar(){
 
 
 function bd_iniciar_inicio(){
+	
 	/////******
-	//myApp.alert('ok');
+myApp.alert('303');
 //comprobar_internet();
 	/////******
 var hoy = new Date();
@@ -385,14 +386,16 @@ $$('.tabbar-labels').show();
 //$$('#boton-1').click();
 myApp.showTab('#view-2');
 	//
-	
+myApp.alert('389');	
 //sincronizar();
     }else{
 //myApp.alert('ingrese por favor','error'); 
 $$('.panel').css({'visibility':'hidden'});		
-$$('.tabbar-labels').hide();		
+$$('.tabbar-labels').hide();
+	myApp.alert('395');	
 	}
    //
+	myApp.alert('397');
 }
 
 
@@ -453,7 +456,7 @@ var version = 1.01;
 	$$.post('http://yanbal.agendamia.com/conecta.php',{ingreso:tipo,email:email,clave:clave,version:version},function(data){
 //	
 	var respuesta = data.split("|");
-	//myApp.alert('data:'+data); 	
+	myApp.alert('data:'+data); 	
 	if(respuesta[0]==='OK'){		
     localStorage.setItem('email',JSON.stringify(email));
     localStorage.setItem('usuario_id',JSON.stringify(respuesta[1]));
@@ -480,6 +483,7 @@ var version = 1.01;
 	}
 		});
 		}else{
+		myApp.alert('Sin Internet');	
 			// conexion off
 		var mi_email = JSON.parse(localStorage.getItem('usuario_email'));
 		var mi_clave = JSON.parse(localStorage.getItem('usuario_clave'));
@@ -491,6 +495,7 @@ var version = 1.01;
 		}else if(email===mi_email || clave===mi_clave){
 		localStorage.setItem('sesion',JSON.stringify('on'));
 		//
+		
 			bd_iniciar_inicio();
 			
 		}	
