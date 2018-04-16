@@ -125,7 +125,7 @@ input[type="text"], input[type="number"], select, textarea {
 /* agenda */
 #zona_agenda{margin-top: 15px; border-top: solid 1px red; padding-top: 15px; margin-bottom: 15px;}
 .uno{width: 8%; }
-.dos{width: 41%; max-width: 41vw; border:dotted 1px #666; position: relative; background: #D7D7D7; overflow-x: hidden}
+.dos{width: 41%; max-width: 41vw; border:dotted 1px #666; position: relative; background: #D7D7D7; overflow-x: hidden; white-space: nowrap}
 
 .tres{width: 2%;}
 
