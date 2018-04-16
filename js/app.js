@@ -1300,9 +1300,13 @@ function pulsar(obj,name,valor,base) {
 
 function contactos(){
 	navigator.contacts.pickContact(function(contact){
-		//myApp.alert(contact);
+		//myApp.alert(JSON.stringify(contact));
 		if(JSON.stringify(contact['displayName'])!=='null'){
 		var contacto_nombre=JSON.stringify(contact['displayName']);
+			contacto_nombre = contacto_nombre.replace(/["']/g, ""); //quita doble comillas
+		$$('#contacto_base').val(contacto_nombre);	
+		}else if(JSON.stringify(contact['nickname'])!=='null'){
+		var contacto_nombre=JSON.stringify(contact['nickname']);
 			contacto_nombre = contacto_nombre.replace(/["']/g, ""); //quita doble comillas
 		$$('#contacto_base').val(contacto_nombre);	
 		}
