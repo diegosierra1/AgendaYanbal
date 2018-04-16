@@ -1331,11 +1331,11 @@ function contactos(){
 
 
 function ejecutar(ref){
-	if(ref=='telefono'){
+	if(ref==='telefono'){
 	var tll=$$('#telefono_base').val();
 		$$('#link_telefono').attr('href','tel:'+tll);
 		//myApp.alert(tll);
-	}else if(ref=='email'){
+	}else if(ref==='email'){
 	var mll=$$('#email_base').val();
 		$$('#link_email').attr('href','mailto:'+mll);
 		//myApp.alert(tll);
