@@ -634,7 +634,7 @@ function editar(hora){
 	
 	//
 	$$.post('editar_agenda.html', {}, function (data) {        
-	myApp.alert(data,'',function(){
+	myApp.confirm(data,'',function(){
 	guardar_agenda_todo();
 	});	/// se crea un html para el formulario de edicion de las notas y asi poder cargar los listados de contactos y lugares
 	$$('.editar_hora').html(hmostrar+' '+ap);
@@ -1300,21 +1300,22 @@ function pulsar(obj,name,valor,base) {
 
 function contactos(){
 	navigator.contacts.pickContact(function(contact){
-		if(JSON.stringify(contact['displayName'])!=null){
+		//myApp.alert(contact);
+		if(JSON.stringify(contact['displayName'])!=='null'){
 		var contacto_nombre=JSON.stringify(contact['displayName']);
 			contacto_nombre = contacto_nombre.replace(/["']/g, ""); //quita doble comillas
 		$$('#contacto_base').val(contacto_nombre);	
 		}
 		
 		
-		if(JSON.stringify(contact['phoneNumbers'][0]['value'])!=null){
+		if(JSON.stringify(contact['phoneNumbers'][0]['value'])!=='null'){
 		var contacto_telefono1=JSON.stringify(contact['phoneNumbers'][0]['value']);
 			contacto_telefono1 = contacto_telefono1.replace(/["']/g, ""); //quita doble comillas
 		$$('#telefono_base').val(contacto_telefono1);
 			ejecutar('telefono');
 		}
 		
-		if(JSON.stringify(contact['emails'][0]['value'])!=null){
+		if(JSON.stringify(contact['emails'][0]['value'])!=='null'){
 		var contacto_email=JSON.stringify(contact['emails'][0]['value']);
 			contacto_email = contacto_email.replace(/["']/g, ""); //quita doble comillas
 		$$('#email_base').val(contacto_email);
