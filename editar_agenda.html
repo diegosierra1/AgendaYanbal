@@ -17,11 +17,15 @@ Hora: <span class="editar_hora"></span> : <select id="minutos_base">
 <option value="entregas">hacer entregas</option>
 <option value="personal">personal</option>
 </select> 
+<div onClick="contactos()"><i class="fa fa-users"></i> Buscar en Mis Contactos</div>
 
 <input type="text" id="contacto_base" placeholder="contacto"> 
 
+<div style="display: inline-block; white-space: nowrap"><input type="text" id="telefono_base" placeholder="teléfono" onKeyUp="ejecutar('telefono');"><a href="" style="margin-left: -10px; position: relative; z-index: 2"  class="external" target="_system" id="link_telefono"><i class="fa fa-play-circle fa-lg"></i></a></div>
+
+<div style="display: inline-block; white-space: nowrap"><input type="text" id="email_base" placeholder="email" onKeyUp="ejecutar('email');"><a href="" style="margin-left: -10px; position: relative; z-index: 2"  class="external" target="_system" id="link_email"><i class="fa fa-play-circle fa-lg"></i></a></div>
 
 <input type="text" id="lugar_base" placeholder="en qué lugar?"> 
 
-<textarea class="zona_nota" placeholder="escriba aquí"></textarea>
+<textarea class="zona_nota" placeholder="comentario aquí"></textarea>
 

@@ -24,7 +24,7 @@ var yyyy = hoy.getFullYear();
 var user_id = JSON.parse(localStorage.getItem('usuario_id'));
 
 
-var version = '1.0.2';
+var version = '1.1.0';
 localStorage.setItem('version',JSON.stringify(version));
 
 
@@ -137,7 +137,7 @@ var y=2017;
 				var ag_id=JSON.parse(localStorage.getItem('ID'+user_id+'Agenda'+fecha+'_'+h+'id'));	
 				
 				if(ag===null ){
-				ag='||||';	
+				ag='||||||';	
 				}
 				if(ag_id===null ){
 				ag_id='||';	
@@ -152,7 +152,10 @@ var y=2017;
 				var AS=agf[1];
 				var CT=agf[2];	
 				var LG=agf[3];	
-				var NT=agf[4];	
+				var NT=agf[4];
+				var TL=agf[5];	
+				var EM=agf[6];	
+					
 				//var SR=agf[5];
 				//
 				//myApp.alert(h+':'+NT);
@@ -185,6 +188,23 @@ var y=2017;
 				}
 				$$('.H'+h+' .contacto').html(CT);
 				$$('#Contacto'+h).val(CT);		
+					//
+				//myApp.alert(h+'*'+TL+'*');
+				if(TL!=='' && TL!==undefined){
+				$$('.H'+h+' .agenda_telefono').show();
+				}else{
+				$$('.H'+h+' .agenda_telefono').hide();
+				}
+				$$('.H'+h+' .telefono').html(TL);
+				$$('#Telefono'+h).val(TL);	
+				//
+				if(EM!=='' && EM!==undefined){
+				$$('.H'+h+' .agenda_email').show();
+				}else{
+				$$('.H'+h+' .agenda_email').hide();
+				}
+				$$('.H'+h+' .email').html(EM);
+				$$('#Email'+h).val(EM);
 					//
 				if(LG!==''){
 				$$('.H'+h+' .agenda_lugar').show();
@@ -254,8 +274,8 @@ var DA=fechaInicio.getDate();
 	h++;
 	var name_nota='ID'+user_id+'Agenda'+f+'_'+h;
 	var nota_existe=JSON.parse(localStorage.getItem(name_nota));
-		
-		if(nota_existe!==null && nota_existe!=='' && nota_existe!=='||||'){
+	//myApp.alert('ID'+user_id+'Agenda'+f+'_'+h+'::'+nota_existe);	
+		if(nota_existe!==null && nota_existe!=='' && nota_existe!=='||||' && nota_existe!=='||||||'){
 		total_notas++;
 			if(total_notas===1){
 				var sincronizar_dos = f;
@@ -292,7 +312,7 @@ $$('#'+f).html('<div class="campana">'+dxx+'<span class="alerta">'+total_notas+'
 			while(n<1000){
 				n++;
 			var ntB=nt[n].split("|");
-			var valor_final=ntB[3]+'|'+ntB[4]+'|'+ntB[5]+'|'+ntB[6]+'|'+ntB[7];
+			var valor_final=ntB[3]+'|'+ntB[4]+'|'+ntB[5]+'|'+ntB[6]+'|'+ntB[7]+'|'+ntB[8]+'|'+ntB[9];
 localStorage.setItem('ID'+user_id+'Agenda'+ntB[1]+'_'+ntB[2],JSON.stringify(valor_final));
 				
 			}
@@ -609,6 +629,9 @@ function editar(hora){
 	var contacto_actual=$$('#Contacto'+hora).val();
 	var lugar_actual=$$('#Lugar'+hora).val();
 	var nota_actual=$$('#Nota'+hora).val();
+	var telefono_actual=$$('#Telefono'+hora).val();
+	var email_actual=$$('#Email'+hora).val();
+	
 	//
 	$$.post('editar_agenda.html', {}, function (data) {        
 	myApp.alert(data,'',function(){
@@ -620,7 +643,11 @@ function editar(hora){
 	$$('#contacto_base').val(contacto_actual);	
 	$$('#lugar_base').val(lugar_actual);	
 	$$('.zona_nota').val(nota_actual);
-		
+	
+	$$('#telefono_base').val(telefono_actual);	
+	$$('#email_base').val(email_actual);
+		ejecutar('telefono');
+		ejecutar('email');
     });
 
 }
@@ -675,6 +702,27 @@ $$('.H'+campo+' .agenda_contacto').show();
 	$$('.H'+campo+' .agenda_contacto').hide();		
 		}		
 }
+
+	
+		if(tipo==='telefono'){
+$$('.H'+campo+' .agenda_telefono .telefono').html(valor);
+$$('#Telefono'+campo).val(valor);
+		if(valor!==''){
+$$('.H'+campo+' .agenda_telefono').show();	
+		}else{
+	$$('.H'+campo+' .agenda_telefono').hide();		
+		}		
+}
+	
+		if(tipo==='email'){
+$$('.H'+campo+' .agenda_email .email').html(valor);
+$$('#Email'+campo).val(valor);
+		if(valor!==''){
+$$('.H'+campo+' .agenda_email').show();	
+		}else{
+	$$('.H'+campo+' .agenda_email').hide();		
+		}		
+}
 	
 	if(tipo==='lugar'){
 $$('.H'+campo+' .agenda_lugar .lugar').html(valor);
@@ -703,6 +751,8 @@ var ag_id=JSON.parse(localStorage.getItem('ID'+user_id+'Agenda'+fc+'_'+campo+'id
 	var contacto=$$('#Contacto'+campo).val();
 	var lugar=$$('#Lugar'+campo).val();
 	var nota=$$('#Nota'+campo).val();
+	var telefono=$$('#Telefono'+campo).val();
+	var email=$$('#Email'+campo).val();
 	//
 	if(ag_id!==null){
 	var agenda_id=ag_id.split("|");
@@ -712,14 +762,14 @@ var ag_id=JSON.parse(localStorage.getItem('ID'+user_id+'Agenda'+fc+'_'+campo+'id
 	agenda_id0='';	
 	}
 	
-	var valor_final=minutos+'|'+asunto+'|'+contacto+'|'+lugar+'|'+nota;
+	var valor_final=minutos+'|'+asunto+'|'+contacto+'|'+lugar+'|'+nota+'|'+telefono+'|'+email;
 	var valor_final_id=agenda_id0+'|no';
 	
-if(ag===null || ag===''|| ag==='||||' || ag!==valor_final){
+if(ag===null || ag===''|| ag==='||||||'|| ag==='||||' || ag!==valor_final){
 localStorage.setItem('ID'+user_id+'Agenda'+fc+'_'+campo,JSON.stringify(valor_final));
 localStorage.setItem('ID'+user_id+'Agenda'+fc+'_'+campo+'id',JSON.stringify(valor_final_id));	
 	//myApp.alert('guardado:'+'ID'+user_id+'Agenda'+fc+'_'+campo+'>'+valor_final);
-if(ag===null || ag===''|| ag==='||||'){
+if(ag===null || ag===''|| ag==='||||||'|| ag==='||||'){
 	marcar_calendario(fc);
 }	
 }
@@ -736,6 +786,9 @@ function guardar_agenda_todo(){
 	var c=$$('#contacto_base').val();
 	var a=$$('#asunto_base').val();
 	var m=$$('#minutos_base').val();
+	//
+	var tel=$$('#telefono_base').val();
+	var em=$$('#email_base').val();
 	
 	//myApp.alert('pp'+a);
 	
@@ -744,6 +797,9 @@ guardar_agenda('lugar', l);
 guardar_agenda('contacto', c); 
 guardar_agenda('asunto', a); 
 guardar_agenda('minutos', m); 
+guardar_agenda('telefono', tel); 
+guardar_agenda('email', em); 	
+	
 
 var fc=$$('#fecha_cargada').val();
 sincronizar(fc);
@@ -761,6 +817,10 @@ $$('#asunto_base').val('');
 $$('#contacto_base').val('');
 $$('#lugar_base').val('');
 $$('.zona_nota').val('');
+$$('#telefono_base').val('');
+$$('#email_base').val('');	
+ejecutar('telefono');
+ejecutar('email');
 	//
 	var hx=$$('#editando').val();
 $$('#Minutos'+hx).val('');
@@ -768,11 +828,16 @@ $$('#Asunto'+hx).val('');
 $$('#Contacto'+hx).val('');
 $$('#Lugar'+hx).val('');
 $$('#Nota'+hx).val('');	
+$$('#Telefono'+hx).val('');
+$$('#Email'+hx).val('');		
 $$('.H'+hx+' .nota').html('');
 	//
 $$('.H'+hx+' .agenda_asuntos').hide();
 $$('.H'+hx+' .agenda_contacto').hide();	
-$$('.H'+hx+' .agenda_lugar').hide();	
+$$('.H'+hx+' .agenda_lugar').hide();
+$$('.H'+hx+' .agenda_telefono').hide();	
+$$('.H'+hx+' .agenda_email').hide();	
+	
 //
 	var fx=$$('#fecha_cargada').val();
 	localStorage.removeItem('ID'+user_id+'Agenda'+fx+'_'+hx);
@@ -907,7 +972,9 @@ var DA=fechaInicio.getDate();
 						$$('#editando').val(h);
 guardar_agenda('texto', rx[9]); 
 guardar_agenda('lugar', rx[8]); 
-guardar_agenda('contacto', rx[7]); 
+guardar_agenda('contacto', rx[7]);
+guardar_agenda('telefono', rx[10]);						
+guardar_agenda('email', rx[11]);						
 guardar_agenda('asunto', rx[6]); 
 guardar_agenda('minutos', rx[5]);
 						
@@ -1230,5 +1297,48 @@ function pulsar(obj,name,valor,base) {
     obj.checked=true;
 } 
 
+
+function contactos(){
+	navigator.contacts.pickContact(function(contact){
+		if(JSON.stringify(contact['displayName'])!=null){
+		var contacto_nombre=JSON.stringify(contact['displayName']);
+			contacto_nombre = contacto_nombre.replace(/["']/g, ""); //quita doble comillas
+		$$('#contacto_base').val(contacto_nombre);	
+		}
+		
+		
+		if(JSON.stringify(contact['phoneNumbers'][0]['value'])!=null){
+		var contacto_telefono1=JSON.stringify(contact['phoneNumbers'][0]['value']);
+			contacto_telefono1 = contacto_telefono1.replace(/["']/g, ""); //quita doble comillas
+		$$('#telefono_base').val(contacto_telefono1);
+			ejecutar('telefono');
+		}
+		
+		if(JSON.stringify(contact['emails'][0]['value'])!=null){
+		var contacto_email=JSON.stringify(contact['emails'][0]['value']);
+			contacto_email = contacto_email.replace(/["']/g, ""); //quita doble comillas
+		$$('#email_base').val(contacto_email);
+			ejecutar('email');
+		}
+		
+ //myApp.alert('The following contact has been selected:' + JSON.stringify(contact['emails'][0]['value']) );
+		//contact['displayName'] // contact['phoneNumbers'][0]['value']  // contact['phoneNumbers'][1]['value'] //// contact['emails'][0]['value'] /// ver todos los datos: contact
+},function(err){
+ myApp.alert('Error: ' + err);
+});
+}
+
+
+function ejecutar(ref){
+	if(ref=='telefono'){
+	var tll=$$('#telefono_base').val();
+		$$('#link_telefono').attr('href','tel:'+tll);
+		//myApp.alert(tll);
+	}else if(ref=='email'){
+	var mll=$$('#email_base').val();
+		$$('#link_email').attr('href','mailto:'+mll);
+		//myApp.alert(tll);
+	}
+}
 
 ///********************

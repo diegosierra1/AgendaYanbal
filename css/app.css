@@ -32,7 +32,7 @@ i.tabbar-demo-icon-4{
 
 
 
-body{font-family:'Arial'; font-size: 18px;}
+body{font-family:'Arial'; font-size: 18px; width: 100vw; max-width: 100vw}
 .tabla_listado{border: solid 1px #333; width: 100%; font-size: 18px;}
 .tabla_listado td{border-bottom: dotted 1px #333; border-right: dotted 1px #333; margin: 0px; padding: 3px;}
 .tabla_listado th{background: #333; color: #fff; margin: 0px; padding: 3px; white-space: nowrap}
@@ -122,10 +122,10 @@ input[type="text"], input[type="number"], select, textarea {
 .alerta{position: absolute; top: 0; right: 0; background: #f00; color: #fff; text-align: center; width: 8px; font-size: 5px;}
 /* fin calendarios */
 
-/* agenda*/
+/* agenda */
 #zona_agenda{margin-top: 15px; border-top: solid 1px red; padding-top: 15px; margin-bottom: 15px;}
 .uno{width: 8%; }
-.dos{width: 41%; border:dotted 1px #666; position: relative; background: #D7D7D7; }
+.dos{width: 41%; max-width: 41vw; border:dotted 1px #666; position: relative; background: #D7D7D7; overflow-x: hidden}
 
 .tres{width: 2%;}
 
@@ -156,3 +156,13 @@ input[type="text"], input[type="number"], select, textarea {
 .icono_buscar_on{color: green}
 
 #zona_actualizacion{display: none}
+
+.sincronizar{display: none}
+
+
+
+/* Móviles en vertical
+   ------------------------------------------------------------------------- */
+@media (min-width: 481px) { 
+	#zona_busqueda i{margin-left: 10px; margin-right: 10px;}	
+}

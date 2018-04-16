@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.agendamia.yanbal" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.agendamia.yanbal" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Agenda Yanbal</name>
     <description>
         Agenda para Empresarios Yanbal
@@ -12,6 +12,8 @@
     <access origin="*" />
     -->
     <access origin="*" launch-external="yes" />
+    <access origin="mailto:*" launch-external="yes"/>
+    <access origin="tel:*" launch-external="yes"/>
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -33,9 +35,30 @@
     </platform>
     <preference name="DisallowOverscroll" value="true" />
     <plugin name="cordova-plugin-whitelist" spec="~1.3.3" />
+    <plugin name="cordova-plugin-contacts" spec="~3.0.1" />
+    <plugin name="cordova-plugin-statusbar" spec="~2.4.1" />
     <!--
-    <plugin name="cordova-plugin-whitelist" spec="~1.2.0" />
-    <plugin name="cordova-plugin-console" spec="~1.0.1" />
-    <plugin name="cordova-plugin-statusbar" spec="~1.0.1" />
+    
+    
+    <plugin name="cordova-plugin-battery-status" spec="~2.0.1" />
+<plugin name="cordova-plugin-camera" spec="~4.0.2" />
+<plugin name="cordova-plugin-console" spec="~1.1.0" />
+<plugin name="cordova-plugin-contacts" spec="~3.0.1" />
+<plugin name="cordova-plugin-device" spec="~2.0.1" />
+<plugin name="cordova-plugin-device-motion" spec="~2.0.0" />
+<plugin name="cordova-plugin-device-orientation" spec="~2.0.0" />
+<plugin name="cordova-plugin-dialogs" spec="~2.0.1" />
+<plugin name="cordova-plugin-file" spec="~6.0.1" />
+<plugin name="cordova-plugin-file-transfer" spec="~1.7.1" />
+<plugin name="cordova-plugin-geolocation" spec="~4.0.1" />
+<plugin name="cordova-plugin-globalization" spec="~1.0.9" />
+<plugin name="cordova-plugin-inappbrowser" spec="~2.0.2" />
+<plugin name="cordova-plugin-media" spec="~5.0.2" />
+<plugin name="cordova-plugin-media-capture" spec="~3.0.1" />
+<plugin name="cordova-plugin-network-information" spec="~2.0.1" />
+<plugin name="cordova-plugin-splashscreen" spec="~5.0.2" />
+<plugin name="cordova-plugin-vibration" spec="~3.0.1" />
+<plugin name="cordova-plugin-statusbar" spec="~2.4.1" />
+<plugin name="cordova-plugin-whitelist" spec="~1.3.3" />
     -->
 </widget>
