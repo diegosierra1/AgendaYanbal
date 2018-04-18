@@ -1329,7 +1329,7 @@ function contactos(){
  //myApp.alert('The following contact has been selected:' + JSON.stringify(contact['emails'][0]['value']) );
 		//contact['displayName'] // contact['phoneNumbers'][0]['value']  // contact['phoneNumbers'][1]['value'] //// contact['emails'][0]['value'] /// ver todos los datos: contact
 },function(err){
- myApp.alert('Error: ' + err);
+ //myApp.alert('Error*: ' + err);
 });
 }
 
