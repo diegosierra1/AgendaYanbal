@@ -24,9 +24,29 @@ var yyyy = hoy.getFullYear();
 var user_id = JSON.parse(localStorage.getItem('usuario_id'));
 
 
-var version = '1.1.0';
+var version = '1.1.1';
 localStorage.setItem('version',JSON.stringify(version));
+//
+///+++++++++
+function checkConnection() {
+    var networkState = navigator.connection.type;
 
+    var states = {};
+    states[Connection.UNKNOWN]  = false;
+    states[Connection.ETHERNET] = true;
+    states[Connection.WIFI]     = true;
+    states[Connection.CELL_2G]  = true;
+    states[Connection.CELL_3G]  = true;
+    states[Connection.CELL_4G]  = true;
+    states[Connection.CELL]     = true;
+    states[Connection.NONE]     = false;
+    if (states[networkState]) {
+        return 'Online';
+    } else {
+        return 'Offline';
+    }
+}
+////+++++++
 
 function escribir_fecha(F){
 	var fx=F.split('-');
@@ -302,7 +322,10 @@ $$('#'+f).html('<div class="campana">'+dxx+'<span class="alerta">'+total_notas+'
 }
 	
 	//myApp.alert(paquete_enviado,'sincronizar enviado');
-	if(navigator.onLine){
+	var conexion=checkConnection();
+	//myApp.alert(conexion);
+	//if(navigator.onLine){
+	if(conexion==='Online'){
 	/// revisar aqui el proceso
 	$$.post('http://yanbal.agendamia.com/conecta.php',{sincronizar_todo:'si', usuario_id:user_id, paquete:paquete_enviado,sincronizar_uno:sincronizar_uno,sincronizar_dos:sincronizar_dos}, function(datax){
 	//myApp.alert(datax,'sincronizar recibido');
@@ -486,7 +509,10 @@ var version = JSON.parse(localStorage.getItem('version'));
 	//myApp.alert('450');
 		
 		//if(conexion==='on'){
-			if(navigator.onLine){
+			var conexion=checkConnection();
+	//myApp.alert(conexion);
+	//if(navigator.onLine){
+	if(conexion==='Online'){
 	//myApp.alert('454'); 			
 	//
 	//myApp.alert('validando','procesando');
@@ -543,9 +569,12 @@ var version = JSON.parse(localStorage.getItem('version'));
 		
     }
 	}else if(tipo==='nuevo'){
-		if(navigator.onLine){
+		var conexion=checkConnection();
+	//myApp.alert(conexion);
+	//if(navigator.onLine){
+	if(conexion==='Offline'){
 			
-		}else {		
+		
 			//if(conexion==='off'){
 			myApp.alert('Por favor revise su conexión a internet','error en conexión');
 			return;
@@ -577,9 +606,10 @@ var version = JSON.parse(localStorage.getItem('version'));
     
 	}else if(tipo==='recordar'){
 		
-		if(navigator.onLine){
-			
-		}else{
+		var conexion=checkConnection();
+	//myApp.alert(conexion);
+	//if(navigator.onLine){
+	if(conexion==='Offline'){
 		//if(conexion==='off'){
 			myApp.alert('Por favor revise su conexión a internet','error en conexión');
 			return;
@@ -861,7 +891,10 @@ function sincronizar(fecha){
 	//myApp.alert(fecha);
 	//var conexion = JSON.parse(localStorage.getItem('conexion'));
 //if(conexion==='on'){	
-	if(navigator.onLine){
+	var conexion=checkConnection();
+	//myApp.alert(conexion);
+	//if(navigator.onLine){
+	if(conexion==='Online'){
 /// hacemos un recorrido por todas las notas guardadas
 if(fecha===''){
 var fechaInicio = new Date('2018-01-01');
@@ -910,7 +943,10 @@ var DA=fechaInicio.getDate();
 					
 						//conexion='off';
 						//if(conexion==='on'){
-							if(navigator.onLine){
+							var conexion=checkConnection();
+	//myApp.alert(conexion);
+	//if(navigator.onLine){
+	if(conexion==='Online'){
 						//myApp.alert('sincronizando...','');
 							///OJO con Nota
 						var agenda_id=agf_id[0];
@@ -957,7 +993,10 @@ var DA=fechaInicio.getDate();
 		}else if(nota_existe===null){
 		/// se envia consulta para verifiar que no haya registro desde otro dispositivo	
 				//if(conexion==='on'){
-					if(navigator.onLine){	
+					var conexion=checkConnection();
+	//myApp.alert(conexion);
+	//if(navigator.onLine){
+	if(conexion==='Online'){
 						$$.post('http://yanbal.agendamia.com/conecta.php',{sincronizar_nota:'si', usuario_id:user_id, fecha:f, hora:h, nota:'', agenda_id:'', agenda_time:0}, function(datax){
 //	
 		//myApp.alert('HB:'+h);				
@@ -999,7 +1038,10 @@ guardar_agenda('minutos', rx[5]);
 
 
 function sincronizar_todo(){
-	if(navigator.onLine){	
+	var conexion=checkConnection();
+	//myApp.alert(conexion);
+	//if(navigator.onLine){
+	if(conexion==='Online'){	
 	marcar_calendario('');
 	}else{
 	myApp.alert('revisa tu conexión a internet','error');	
@@ -1012,7 +1054,10 @@ function actualizar_fecha_vencimiento(){
 //var conexion = JSON.parse(localStorage.getItem('conexion'));
 	//
 	//if(conexion==='on'){
-		if(navigator.onLine){
+		var conexion=checkConnection();
+	//myApp.alert(conexion);
+	//if(navigator.onLine){
+	if(conexion==='Online'){
 	var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));
 		$$.post('http://yanbal.agendamia.com/conecta.php',{actualizar_vencimiento:'si',usuario_id:usuario_id},function(dataV){
 		 	var respuestaV = dataV.split("|");
@@ -1179,7 +1224,10 @@ var amigo_texto=$$('#compartir_texto').val();
 	if(amigo==='' || amigo_email==='' || amigo_texto===''){
 		myApp.alert('complete los datos por favor','error');
 	}else{
-	if(navigator.onLine){	
+	var conexion=checkConnection();
+	//myApp.alert(conexion);
+	//if(navigator.onLine){
+	if(conexion==='Online'){	
 	$$.post('http://yanbal.agendamia.com/conecta.php',{compartir:'si', usuario_id:user_id, amigo:amigo, email:amigo_email, texto:amigo_texto}, function(respuesta){
 	var rs=respuesta.split('|');
 	myApp.alert(rs[1],rs[0]);	
@@ -1213,7 +1261,10 @@ var cantidad=$$('#regalar').val();
 	if(cantidad==='' || cantidad===0){
 	myApp.alert('falta la cantidad de suscripciones que deseas obsequiar','error');
 	}else{
-		if(navigator.onLine){
+		var conexion=checkConnection();
+	//myApp.alert(conexion);
+	//if(navigator.onLine){
+	if(conexion==='Online'){
 $$('#regalar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+usuario_id+'&cod='+key+'&regalo='+cantidad);	
 		}else{
 	myApp.alert('revisa tu conexión a internet','error');		
@@ -1228,7 +1279,10 @@ $$('#regalar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+us
 function buscar_actualizacion(){
 var version = JSON.parse(localStorage.getItem('version'));
 	//myApp.alert(version);
-if(navigator.onLine){	
+var conexion=checkConnection();
+	//myApp.alert(conexion);
+	//if(navigator.onLine){
+	if(conexion==='Online'){
 	$$.post('http://yanbal.agendamia.com/conecta.php',{actualizar:'si', version_actual:version}, function(respuesta){
 	//myApp.alert(respuesta);	
 	var rs=respuesta.split('|');
@@ -1269,7 +1323,10 @@ var amigo_texto=$$('#compartir_texto').val();
 */
 
 function cambiar_recordatorio(valor){
-if(navigator.onLine){
+var conexion=checkConnection();
+	//myApp.alert(conexion);
+	//if(navigator.onLine){
+	if(conexion==='Online'){
 	var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));
 	$$.post('http://yanbal.agendamia.com/conecta.php',{recordatorio:'si', valor:valor, usuario_id:usuario_id}, function(respuesta){
 	
