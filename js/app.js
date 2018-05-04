@@ -29,18 +29,7 @@ localStorage.setItem('version',JSON.stringify(version));
 //
 ///+++++++++
 function checkConnection() {
-    var networkState = navigator.connection.type;
-
-    var states = {};
-    states[Connection.UNKNOWN]  = false;
-    states[Connection.ETHERNET] = true;
-    states[Connection.WIFI]     = true;
-    states[Connection.CELL_2G]  = true;
-    states[Connection.CELL_3G]  = true;
-    states[Connection.CELL_4G]  = true;
-    states[Connection.CELL]     = true;
-    states[Connection.NONE]     = false;
-    if (states[networkState]) {
+    if(navigator.onLine){
         return 'Online';
     } else {
         return 'Offline';
@@ -459,12 +448,19 @@ $$('.tabbar-labels').hide();
 
 
 
+function ver_politicas(){
+	var mx='Esta aplicación no accede a datos privados sin consentimiento, no comparte información de los usuarios entre ellos ni con un tercero. No permite el acceso a los datos registrados por ningún motivo salvo orden judicial. Si desea que toda su información sea eliminada de nuestra plataforma, envienos un correo con el asunto "dar de baja" desde su cuenta de correo registrada en nuestro sistema';
+myApp.alert(mx,'<h4>Política de Privacidad</h4>');	
+}
 
 
 function ejecutar(ref){
+//myApp.alert(ref);
+$$('.politicas').hide();
 $$('#tipo_ingreso').val(ref);
 	if(ref==='nuevo'){
 $$('.confirmar').show();
+$$('.politicas').show();		
 $$('.nuevo').show();		
 $$('.ingreso').show();		
 $$('#submmit-register').val('Registrase');
@@ -570,6 +566,8 @@ var version = JSON.parse(localStorage.getItem('version'));
     }
 	}else if(tipo==='nuevo'){
 		var conexion=checkConnection();
+		 
+	
 	//myApp.alert(conexion);
 	//if(navigator.onLine){
 	if(conexion==='Offline'){
@@ -589,6 +587,13 @@ var version = JSON.parse(localStorage.getItem('version'));
      myApp.alert('las claves no coinciden','error'); 
 		return;
     }
+	
+		if($$("#politicas").is(':checked')) {  
+           
+        } else {  
+            myApp.alert("Debe aceptar las politicas de Privacidad");
+			return;
+        } 
 		
 		
 	$$.post('http://yanbal.agendamia.com/conecta.php',{ingreso:tipo,email:email,clave:clave,nombre:nombre},function(data){
@@ -676,8 +681,8 @@ function editar(hora){
 	
 	$$('#telefono_base').val(telefono_actual);	
 	$$('#email_base').val(email_actual);
-		ejecutar('telefono');
-		ejecutar('email');
+		accion('telefono');
+		accion('email');
     });
 
 }
@@ -849,8 +854,8 @@ $$('#lugar_base').val('');
 $$('.zona_nota').val('');
 $$('#telefono_base').val('');
 $$('#email_base').val('');	
-ejecutar('telefono');
-ejecutar('email');
+accion('telefono');
+accion('email');
 	//
 	var hx=$$('#editando').val();
 $$('#Minutos'+hx).val('');
@@ -1373,14 +1378,14 @@ function contactos(){
 		var contacto_telefono1=JSON.stringify(contact['phoneNumbers'][0]['value']);
 			contacto_telefono1 = contacto_telefono1.replace(/["']/g, ""); //quita doble comillas
 		$$('#telefono_base').val(contacto_telefono1);
-			ejecutar('telefono');
+			accion('telefono');
 		}
 		
 		if(JSON.stringify(contact['emails'][0]['value'])!=='null'){
 		var contacto_email=JSON.stringify(contact['emails'][0]['value']);
 			contacto_email = contacto_email.replace(/["']/g, ""); //quita doble comillas
 		$$('#email_base').val(contacto_email);
-			ejecutar('email');
+			accion('email');
 		}
 		
  //myApp.alert('The following contact has been selected:' + JSON.stringify(contact['emails'][0]['value']) );
@@ -1391,7 +1396,7 @@ function contactos(){
 }
 
 
-function ejecutar(ref){
+function accion(ref){
 	if(ref==='telefono'){
 	var tll=$$('#telefono_base').val();
 		$$('#link_telefono').attr('href','tel:'+tll);
