@@ -48,7 +48,7 @@ body{font-family:'Arial'; font-size: 18px; width: 100vw; max-width: 100vw}
 .seccion{background-color: orange; font-size: 18px; text-align: center; font-weight: bold; color: #fff;}
 .oculto{display: none}
 .politicas{display: none}
-
+.boton_play_store{width: 200px; height: auto;}
 
 
 input[type="checkbox"]  {
