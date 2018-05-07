@@ -24,7 +24,7 @@ var yyyy = hoy.getFullYear();
 var user_id = JSON.parse(localStorage.getItem('usuario_id'));
 
 
-var version = '1.1.1';
+var version = '1.1.3';
 localStorage.setItem('version',JSON.stringify(version));
 //
 ///+++++++++
@@ -419,7 +419,7 @@ $$('.version_actual').html(version);
 $$('#recordatorio').val(enviar_agenda);		
 //myApp.alert(md5);
 //$$('.nombre_usuario').html(key);		
-$$('#renovar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+usuario_id+'&cod='+key);	
+$$('#renovar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+usuario_id+'&cod='+key+'&m=USD');	
 			
 //$$('#zona_calendario').load('campanas2018.html');
 $$.post('campanas.html', {}, function (data) {        
@@ -1245,13 +1245,38 @@ var amigo_texto=$$('#compartir_texto').val();
 }
 
 
+function calcular_compra(moneda){
+if(moneda==='COP'){
+var compra=12000;
+$$('#precio_compra').html('$ 12.000');	
+}else{
+var compra=5;
+$$('#precio_compra').html('$ 5,00');	
+}
+
+$$('#total_compra').val(compra);
+	///
+var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));
+var key = JSON.parse(localStorage.getItem('key'));
+	///
+$$('#renovar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+usuario_id+'&cod='+key+'&m='+moneda);		
+}
+
+
+
 function calcular_regalo(){
+var moneda=$('#moneda_regalo').val();
+	if(moneda==='COP'){
+	var valor=12000;	
+	}else{
+	var valor=5;
+	}
 var cantidad=Number($$('#regalar').val());
 var descuento=0;
 	if(cantidad>9){
 		descuento=5;
 	}
-var total_regalo=(cantidad*12000)*((100-descuento)/100);
+var total_regalo=(cantidad*valor)*((100-descuento)/100);
 $$('#precio_regalo').html('$ '+total_regalo);
 $$('#total_regalo').val(total_regalo);
 	regalar_suscripcion();
@@ -1262,6 +1287,7 @@ function regalar_suscripcion(){
 var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));
 var key = JSON.parse(localStorage.getItem('key'));
 var cantidad=$$('#regalar').val();
+var moneda=$$('#moneda_regalo').val();	
 //
 	if(cantidad==='' || cantidad===0){
 	myApp.alert('falta la cantidad de suscripciones que deseas obsequiar','error');
@@ -1270,7 +1296,7 @@ var cantidad=$$('#regalar').val();
 	//myApp.alert(conexion);
 	//if(navigator.onLine){
 	if(conexion==='Online'){
-$$('#regalar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+usuario_id+'&cod='+key+'&regalo='+cantidad);	
+$$('#regalar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+usuario_id+'&cod='+key+'&regalo='+cantidad+'&m='+moneda);	
 		}else{
 	myApp.alert('revisa tu conexión a internet','error');		
 		}

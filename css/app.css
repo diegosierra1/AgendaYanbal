@@ -49,7 +49,7 @@ body{font-family:'Arial'; font-size: 18px; width: 100vw; max-width: 100vw}
 .oculto{display: none}
 .politicas{display: none}
 .boton_play_store{width: 200px; height: auto;}
-
+#moneda_compra, #moneda_regalo{width: 120px;}
 
 input[type="checkbox"]  {
 	/*
