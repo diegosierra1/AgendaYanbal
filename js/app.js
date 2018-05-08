@@ -24,7 +24,7 @@ var yyyy = hoy.getFullYear();
 var user_id = JSON.parse(localStorage.getItem('usuario_id'));
 
 
-var version = '1.1.3';
+var version = '1.1.4';
 localStorage.setItem('version',JSON.stringify(version));
 //
 ///+++++++++
@@ -255,6 +255,8 @@ function marcar_calendario(fecha){
 	var paquete_enviado='';
 	var sincronizar_uno = JSON.parse(localStorage.getItem('sincronizar_uno'));
 	var sincronizar_dos = JSON.parse(localStorage.getItem('sincronizar_dos'));
+	var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));
+	var user_id = JSON.parse(localStorage.getItem('usuario_id'));
 /// hacemos un recorrido por todas las notas guardadas
 	if(fecha===''){
 var fechaInicio = new Date('2019-12-31');
@@ -892,6 +894,8 @@ guardar_agenda('lugar','');
 
 ///////////************************
 function sincronizar(fecha){
+	var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));
+	var user_id = JSON.parse(localStorage.getItem('usuario_id'));
 	//myApp.preloader.show();
 	//myApp.alert(fecha);
 	//var conexion = JSON.parse(localStorage.getItem('conexion'));
@@ -1056,6 +1060,7 @@ function sincronizar_todo(){
 
 
 function actualizar_fecha_vencimiento(){
+	var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));
 //var conexion = JSON.parse(localStorage.getItem('conexion'));
 	//
 	//if(conexion==='on'){
@@ -1221,7 +1226,7 @@ var nnota=nota_existe.toUpperCase();
 
 
 function compartir(){
-	
+var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));	
 var amigo=$$('#compartir_nombre').val();
 var amigo_email=$$('#compartir_email').val();	
 var amigo_texto=$$('#compartir_texto').val();
@@ -1354,6 +1359,7 @@ var amigo_texto=$$('#compartir_texto').val();
 */
 
 function cambiar_recordatorio(valor){
+var usuario_id = JSON.parse(localStorage.getItem('usuario_id'));
 var conexion=checkConnection();
 	//myApp.alert(conexion);
 	//if(navigator.onLine){
