@@ -24,7 +24,7 @@ var yyyy = hoy.getFullYear();
 var user_id = JSON.parse(localStorage.getItem('usuario_id'));
 
 
-var version = '1.1.4';
+var version = '1.1.5';
 localStorage.setItem('version',JSON.stringify(version));
 //
 ///+++++++++
@@ -108,10 +108,11 @@ $$('.C'+ref).show();
 
 function cargar_fecha(fecha){
 //myApp.alert(fecha);
+	
 	$$('#fecha_cargada').val(fecha);
 	// buscamos a que campaña pertenece
 var camp='';
-var y=2017;
+var y=2017;/// se inicia desde 2018
 	while(y<2019){
 		y++;
 		
@@ -123,6 +124,7 @@ var y=2017;
 			//myApp.alert(y+'-'+c+':'+inicio+'/'+fin+'>'+fecha);
 			if(fecha>=inicio && fecha<=fin){
 				camp=y+'-'+c;
+				//myApp.alert('RR:'+camp+'>'+fecha+'>='+inicio+' && '+fecha+'<='+fin);
 				cargar_campana(camp);
 				/// marca la fecha
 				$$('.mes td').removeClass('fecha_seleccionada');
@@ -130,7 +132,7 @@ var y=2017;
 				//
 				var ftx='<div id="fecha_cargada_titulo">Revisando Agenda para:</div>';
 				if(fecha===yyyy+'-'+mm+'-'+dd){
-				ftx=ftx+'HOY';	
+				ftx=ftx+'HOY: '+escribir_fecha(fecha);	
 				}else{
 				ftx=ftx+escribir_fecha(fecha);	
 				}
@@ -143,19 +145,21 @@ var y=2017;
 					$$('.H'+h+' i .fa-tablet-alt').show();
 				//myApp.alert(h);
 				var ag=JSON.parse(localStorage.getItem('ID'+user_id+'Agenda'+fecha+'_'+h));
-				var ag_id=JSON.parse(localStorage.getItem('ID'+user_id+'Agenda'+fecha+'_'+h+'id'));	
+				//var ag_id=JSON.parse(localStorage.getItem('ID'+user_id+'Agenda'+fecha+'_'+h+'id'));	
 				
 				if(ag===null ){
-				ag='||||||';	
+				ag='||||||';
+				//ag='';	
 				}
+				/*	
 				if(ag_id===null ){
 				ag_id='||';	
 				}
-					
+				*/	
 					
 				//myApp.alert(h+'::'+ag);
 				var agf = ag.split("|"); 
-				var agf_id = ag_id.split("|");
+				//var agf_id = ag_id.split("|");
 					//
 				var Mi=agf[0];
 				var AS=agf[1];
@@ -183,7 +187,7 @@ var y=2017;
 					//
 				if(AS!==''){
 					var ic=$$('#asunto_'+AS).val();
-				$$('.H'+h+' .asunto_texto').html('<i class="fa fa-'+ic+'"></i> '+AS+' '+agf_id[0]);
+				$$('.H'+h+' .asunto_texto').html('<i class="fa fa-'+ic+'"></i> '+AS);
 					$$('#Asunto'+h).val(AS);
 				}else{
 				$$('.H'+h+' .asunto_texto').html('');
@@ -227,14 +231,14 @@ var y=2017;
 				$$('.H'+h+' .nota').html(NT);
 				$$('#Nota'+h).val(NT);
 				
-					
+				/*	
 				if(agf_id[0]>0 && agf_id[1]==='si'){
 					
 						$$('.H'+h+' .sincronizar').html('<i class="fa fa-cloud"></i>');
 					}else{	
 						$$('.H'+h+' .sincronizar').html('<i class="fa fa-tablet-alt"></i>');
 					}
-					
+					*/
 	
 				}				
 			
@@ -250,8 +254,16 @@ myApp.showTab('#view-2');
 
 
 
+
+function sumarDias(fecha, dias){
+  fecha.setDate(fecha.getDate() + dias);
+	//myApp.alert(fecha+'*');
+  return fecha;
+}
+
 //// AQUI
 function marcar_calendario(fecha){
+	//myApp.alert(fecha);
 	var paquete_enviado='';
 	var sincronizar_uno = JSON.parse(localStorage.getItem('sincronizar_uno'));
 	var sincronizar_dos = JSON.parse(localStorage.getItem('sincronizar_dos'));
@@ -259,15 +271,21 @@ function marcar_calendario(fecha){
 	var user_id = JSON.parse(localStorage.getItem('usuario_id'));
 /// hacemos un recorrido por todas las notas guardadas
 	if(fecha===''){
-var fechaInicio = new Date('2019-12-31');
-var fechaFin    = new Date('2018-01-01');
+var fechaInicio = new Date('2020-01-01');
+var fechaFin    = new Date('2018-01-02');
 }else{
-var fechaInicio = new Date(fecha);
-var fechaFin    = new Date(fecha);	
+var fechaInicio = new Date(fecha);	
+fechaInicio=sumarDias(fechaInicio, 2);
+var fechaFin    = new Date(fecha);
+fechaFin=sumarDias(fechaFin, 1);	
 }
 	//
-while(fechaInicio.getTime() >= fechaFin.getTime()){
-fechaInicio.setDate(fechaInicio.getDate() - 1);
+
+//myApp.alert(fecha+'FF:'+fechaInicio+'/'+fechaFin);
+	
+while(fechaInicio.getTime() > fechaFin.getTime()){
+//fechaInicio.setDate(fechaInicio.getDate()-1);//fechaInicio.setDate(fechaInicio.getDate() - 1)
+fechaInicio=sumarDias(fechaInicio, -1);	
 var YA=fechaInicio.getFullYear();
 var MA=fechaInicio.getMonth() + 1;
 var DA=fechaInicio.getDate();
@@ -285,14 +303,18 @@ var DA=fechaInicio.getDate();
 	h++;
 	var name_nota='ID'+user_id+'Agenda'+f+'_'+h;
 	var nota_existe=JSON.parse(localStorage.getItem(name_nota));
-	//myApp.alert('ID'+user_id+'Agenda'+f+'_'+h+'::'+nota_existe);	
+		/*
+		if(f==='2018-05-09'){
+		myApp.alert('ID'+user_id+'Agenda'+f+'_'+h+'::'+nota_existe);	
+		}
+		*/
 		if(nota_existe!==null && nota_existe!=='' && nota_existe!=='||||' && nota_existe!=='||||||'){
 		total_notas++;
 			if(total_notas===1){
-				var sincronizar_dos = f;
+			sincronizar_dos = f;
 			}
 			
-			var nt=nota_existe.split("|");
+			//var nt=nota_existe.split("|");
 			//myApp.alert(nt[5]);
 			/*
 			//// se sincronizan solo los nuevos registros
@@ -303,15 +325,32 @@ var DA=fechaInicio.getDate();
 			paquete_enviado=paquete_enviado+'~'+user_id+'|'+f+'|'+h+'|'+nota_existe;
 		}
 	}
-if(total_notas!==0){
+	
+	
+if(h===19){
+
+	
 var fxx= f.split("-");
 var dxx=parseInt(fxx[2]);
+	/*
+if(fecha!==''){
+myApp.alert(fecha+'=='+f+':'+dxx+'/'+total_notas);			
+	}
+	*/
+if(total_notas===0){
+$$('#'+f).html('<div class="campana">'+dxx+'</div>');	
+}else{
+
 $$('#'+f).html('<div class="campana">'+dxx+'<span class="alerta">'+total_notas+'</span></div>');
-	
+		
+}
+
 }
 	//
 }
 	
+	
+if(fechaInicio.getTime() === fechaFin.getTime()){
 	//myApp.alert(paquete_enviado,'sincronizar enviado');
 	var conexion=checkConnection();
 	//myApp.alert(conexion);
@@ -339,6 +378,9 @@ localStorage.setItem('ID'+user_id+'Agenda'+ntB[1]+'_'+ntB[2],JSON.stringify(valo
 	}
 	
 }
+	
+	
+}
 /// FIN AQUI
 
 
@@ -357,7 +399,7 @@ function bd_iniciar_inicio(){
 var hoy = new Date();
 var dd = hoy.getDate();
 var now=(hoy.getTime())/1000;
-if(dd<9){
+if(dd<10){
 	dd='0'+dd;
 }
 var mm = hoy.getMonth()+1; //hoy es 0!
@@ -695,7 +737,7 @@ function editar(hora){
 
 
 function guardar_agenda(tipo,valor){
-//myApp.alert(tipo+'/'+valor);
+//myApp.alert(tipo+'++++'+valor);
 var campo=$$('#editando').val();	
 if(tipo==='texto'){
 
@@ -782,7 +824,7 @@ $$('.H'+campo+' .agenda_asuntos').hide();
 	
 	//myApp.alert('ok'+fc+'_'+campo);	 
 var ag=JSON.parse(localStorage.getItem('ID'+user_id+'Agenda'+fc+'_'+campo));
-var ag_id=JSON.parse(localStorage.getItem('ID'+user_id+'Agenda'+fc+'_'+campo+'id'));	
+//var ag_id=JSON.parse(localStorage.getItem('ID'+user_id+'Agenda'+fc+'_'+campo+'id'));	
 	var minutos=$$('#Minutos'+campo).val();
 	var asunto=$$('#Asunto'+campo).val();
 	var contacto=$$('#Contacto'+campo).val();
@@ -791,6 +833,7 @@ var ag_id=JSON.parse(localStorage.getItem('ID'+user_id+'Agenda'+fc+'_'+campo+'id
 	var telefono=$$('#Telefono'+campo).val();
 	var email=$$('#Email'+campo).val();
 	//
+	/*
 	if(ag_id!==null){
 	var agenda_id=ag_id.split("|");
 	var agenda_id0=agenda_id[0];
@@ -798,21 +841,140 @@ var ag_id=JSON.parse(localStorage.getItem('ID'+user_id+'Agenda'+fc+'_'+campo+'id
 	agenda_id='';	
 	agenda_id0='';	
 	}
-	
+	*/
+	if(email!==null){
 	var valor_final=minutos+'|'+asunto+'|'+contacto+'|'+lugar+'|'+nota+'|'+telefono+'|'+email;
-	var valor_final_id=agenda_id0+'|no';
+	myApp.alert('X');	
+localStorage.setItem('ID'+user_id+'Agenda'+fc+'_'+campo,JSON.stringify(valor_final));
+marcar_calendario(fc);
+	myApp.alert(fc+'*'+valor_final);		
+	}
 	
+	//var valor_final_id=agenda_id0+'|no';
+/*	
 if(ag===null || ag===''|| ag==='||||||'|| ag==='||||' || ag!==valor_final){
 localStorage.setItem('ID'+user_id+'Agenda'+fc+'_'+campo,JSON.stringify(valor_final));
-localStorage.setItem('ID'+user_id+'Agenda'+fc+'_'+campo+'id',JSON.stringify(valor_final_id));	
+//localStorage.setItem('ID'+user_id+'Agenda'+fc+'_'+campo+'id',JSON.stringify(valor_final_id));	
 	//myApp.alert('guardado:'+'ID'+user_id+'Agenda'+fc+'_'+campo+'>'+valor_final);
 if(ag===null || ag===''|| ag==='||||||'|| ag==='||||'){
 	marcar_calendario(fc);
 }	
 }
+*/
+//myApp.alert(fc+'_'+campo+':'+ag+'!=='+valor_final);	
+if(ag!==valor_final){
+
+
+}
+	
+
+
+	
+	
 
 }
 
+
+
+
+
+function guardar_agenda_procesar(texto,lugar,contacto,asunto,minutos,telefono,email, callback){
+//myApp.alert(texto+'+'+lugar+'+'+contacto+'+'+asunto+'+'+minutos+'+'+telefono+'+'+email);
+var campo=$$('#editando').val();
+	
+
+$$('#Nota'+campo).val(texto);
+$$('.H'+campo+' .nota').html(texto);	
+//
+	
+$$('.H'+campo+' .agenda_lugar .lugar').html(lugar);
+$$('#Lugar'+campo).val(lugar);	
+if(lugar!==''){
+$$('.H'+campo+' .agenda_lugar').show();	
+}else{
+$$('.H'+campo+' .agenda_lugar').hide();		
+}
+//	
+var icono=$$('#asunto_'+asunto).val();
+$$('.H'+campo+' .agenda_asuntos i').hide();	
+$$('#Asunto'+campo).val(asunto);	
+if(asunto!==''){
+	$$('.H'+campo+' .agenda_asuntos .'+asunto).show();	
+	$$('.H'+campo+' .agenda_asuntos .asunto_texto').html('<i class="fa '+icono+'"></i> '+asunto);
+	$$('.H'+campo+' .agenda_asuntos').show();
+	//myApp.alert('a:'+asunto);
+	}else{
+	$$('.H'+campo+' .agenda_asuntos .asunto_texto').html('');
+	$$('.H'+campo+' .agenda_asuntos').hide();	
+	}
+//	
+
+
+	
+$$('#Minutos'+campo).val(minutos);	
+	if(minutos!=='' && minutos!=='00'){
+var hm=campo;
+	if(campo>12){
+		hm=campo-12;
+	}		
+$$('.H'+campo+' .agenda_asuntos .hora').html(hm+':'+minutos);	
+	}else{
+$$('.H'+campo+' .agenda_asuntos .hora').html('');		
+	}
+//	
+
+$$('.H'+campo+' .agenda_contacto .contacto').html(contacto);
+$$('#Contacto'+campo).val(contacto);
+if(contacto!==''){
+$$('.H'+campo+' .agenda_contacto').show();	
+		}else{
+	$$('.H'+campo+' .agenda_contacto').hide();		
+		}		
+//
+
+$$('.H'+campo+' .agenda_telefono .telefono').html(telefono);
+$$('#Telefono'+campo).val(telefono);	
+if(telefono!==''){
+$$('.H'+campo+' .agenda_telefono').show();	
+		}else{
+	$$('.H'+campo+' .agenda_telefono').hide();		
+		}		
+//
+$$('.H'+campo+' .agenda_email .email').html(email);
+$$('#Email'+campo).val(email);	
+if(email!==''){
+$$('.H'+campo+' .agenda_email').show();	
+		}else{
+	$$('.H'+campo+' .agenda_email').hide();		
+		}		
+	
+	
+var fc=$$('#fecha_cargada').val();
+	
+	
+	/// guardamos localmente 
+	var valor_final=minutos+'|'+asunto+'|'+contacto+'|'+lugar+'|'+texto+'|'+telefono+'|'+email;
+//myApp.alert('X');
+	//$.when(localStorage.setItem('ID'+user_id+'Agenda'+fc+'_'+campo,JSON.stringify(valor_final))).then(marcar_calendario(fc) );
+	
+	
+localStorage.setItem('ID'+user_id+'Agenda'+fc+'_'+campo,JSON.stringify(valor_final));
+callback(marcar_calendario(fc),sincronizar(fc));		
+
+	
+	
+//myApp.alert(fc+'*'+valor_final)
+//myApp.alert('REF');	
+//marcar_calendario(fc);
+//	
+
+
+//		
+
+	
+//var fc=$$('#fecha_cargada').val();
+//sincronizar(fc);
+}
 
 
 
@@ -828,18 +990,19 @@ function guardar_agenda_todo(){
 	var em=$$('#email_base').val();
 	
 	//myApp.alert('pp'+a);
-	
+/*	
 guardar_agenda('texto', t); 
 guardar_agenda('lugar', l); 
 guardar_agenda('contacto', c); 
 guardar_agenda('asunto', a); 
 guardar_agenda('minutos', m); 
 guardar_agenda('telefono', tel); 
-guardar_agenda('email', em); 	
-	
+guardar_agenda('email', em);
+	*/
+//
+	guardar_agenda_procesar(t,l,c,a,m,tel,em);
 
-var fc=$$('#fecha_cargada').val();
-sincronizar(fc);
+
 }
 
 
@@ -849,7 +1012,7 @@ $$('#boton_borrar').show();
 }
 
 function borrar_agenda(){
-$$('#minutos_base').val('00');
+$$('#minutos_base').val('');
 $$('#asunto_base').val('');
 $$('#contacto_base').val('');
 $$('#lugar_base').val('');
