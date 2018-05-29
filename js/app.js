@@ -24,7 +24,7 @@ var yyyy = hoy.getFullYear();
 var user_id = JSON.parse(localStorage.getItem('usuario_id'));
 
 
-var version = '1.1.5';
+var version = '1.1.6';
 localStorage.setItem('version',JSON.stringify(version));
 //
 ///+++++++++
@@ -327,25 +327,27 @@ var DA=fechaInicio.getDate();
 	}
 	
 	
-if(h===19){
+
 
 	
-var fxx= f.split("-");
-var dxx=parseInt(fxx[2]);
+
 	/*
 if(fecha!==''){
 myApp.alert(fecha+'=='+f+':'+dxx+'/'+total_notas);			
 	}
 	*/
-if(total_notas===0){
-$$('#'+f).html('<div class="campana">'+dxx+'</div>');	
-}else{
-
+if(total_notas===0 && h===19){
+//$$('#'+f+' .alerta').hide();
+	//$$('#'+f+' .campana').hide();
+}else if(h===19){
+var fxx= f.split("-");
+var dxx=parseInt(fxx[2]);	
 $$('#'+f).html('<div class="campana">'+dxx+'<span class="alerta">'+total_notas+'</span></div>');
-		
+//$$('#'+f).html('<div class="campana">'+dxx+'<span class="alerta">'+total_notas+'</span></div>');
+//$$('#'+f+' .alerta').show();			
 }
 
-}
+
 	//
 }
 	
@@ -530,9 +532,10 @@ $$('#email').attr('placeholder','Email Registrado');
 
 function db_ingresar() {
 var nombre=$$('#nombre').val();	
-var email=$$('#email').val();
-var clave=$$('#clave').val();
-var clave2=$$('#clave2').val();	
+var email=$$('#email').val().replace(" ", "");
+	email=email.toLowerCase();
+var clave=$$('#clave').val().replace(" ", "");
+var clave2=$$('#clave2').val().replace(" ", "");	
 var tipo=$$('#tipo_ingreso').val();
 var version = JSON.parse(localStorage.getItem('version'));
 //var conexion = JSON.parse(localStorage.getItem('conexion'));	
@@ -549,7 +552,7 @@ var version = JSON.parse(localStorage.getItem('version'));
 	//myApp.alert('450');
 		
 		//if(conexion==='on'){
-			var conexion=checkConnection();
+	var conexion=checkConnection();
 	//myApp.alert(conexion);
 	//if(navigator.onLine){
 	if(conexion==='Online'){
@@ -587,13 +590,19 @@ var version = JSON.parse(localStorage.getItem('version'));
 		myApp.alert(respuesta[1],respuesta[0]); 
 	}
 		});
+		
 		}else{
 		//myApp.alert('Sin Internet');	
 			// conexion off
 		var mi_email = JSON.parse(localStorage.getItem('usuario_email'));
 		var mi_clave = JSON.parse(localStorage.getItem('usuario_clave'));
+			//
+			mi_email =mi_email.replace(" ", "");
+			mi_clave =mi_clave.replace(" ", "");
+			
+		myApp.alert(mi_email+'::'+mi_clave);		
 		//// si estan vacias se indica que se necesita conexion a internet
-		if(mi_email!==null || mi_clave!==null){
+		if(mi_email===null || mi_clave===null){
 		myApp.alert('Por favor revise su conexión a internet', 'problema');	
 		}else if(email!==mi_email || clave!==mi_clave){
 		myApp.alert('Error en su clave o email','error');		

@@ -727,15 +727,15 @@ Fecha de Vencimiento de tu suscripción: <span class="fecha_vigencia"></span> <i
   </p>
    <div style="border: dotted 1px #333; padding: 8px;">
   <h3>Renovar Suscripción por 1 año</h3>
-  <h2><select id="moneda_compra" onChange="calcular_compra(this.value)"><option value="USD">Dólares</option><option value="COP">Pesos COL</option></select> <span  id="precio_compra">$ 5,00</span></h2>
+  <h2><select id="moneda_compra" onChange="calcular_compra(this.value)"><option value="COP">Pesos COL</option><option value="USD">Dólares</option></select> <span  id="precio_compra">$ 12.000</span></h2>
 <a href="#" class="external" target="_system" id="renovar_ahora"><i class="fa fa-shopping-cart"></i> Renueva Ahora</a>
-<input type="hidden" id="total_compra" value="5">
+<input type="hidden" id="total_compra" value="12000">
 	</div>
      
       <div style="border: dotted 1px #333; padding: 8px; margin-top: 20px;">
  	<h4 style="margin: 0px;">Regalar Suscripciones: <input type="number" name="regalar" id="regalar" style="width: 30px;" value="" placeholder="0" onKeyUp="calcular_regalo()"></h4>
  	<h6 style="margin: 0px;">* Debes enviar el listado en Excel de los nombres y los emails de cada persona al correo: soporte@indexdream.com desde tu correo <span class="email_usuario"></span></h6>
- 	<h2><select id="moneda_regalo" onChange="calcular_regalo()"><option value="USD">Dólares</option><option value="COP">Pesos COL</option></select> <span id="precio_regalo">$ 0</span></h2>
+ 	<h2><select id="moneda_regalo" onChange="calcular_regalo()"><option value="COP">Pesos COL</option><option value="USD">Dólares</option></select> <span id="precio_regalo">$ 0</span></h2>
  	<input type="hidden" id="total_regalo" value="0">
 
 <a href="#" class="external" target="_system" id="regalar_ahora"><i class="fa fa-shopping-cart"></i> Pagar Regalo Ahora</a> 	
