@@ -24,7 +24,7 @@ var yyyy = hoy.getFullYear();
 var user_id = JSON.parse(localStorage.getItem('usuario_id'));
 
 
-var version = '1.1.6';
+var version = '1.1.7';
 localStorage.setItem('version',JSON.stringify(version));
 //
 ///+++++++++
@@ -465,7 +465,7 @@ $$('.version_actual').html(version);
 $$('#recordatorio').val(enviar_agenda);		
 //myApp.alert(md5);
 //$$('.nombre_usuario').html(key);		
-$$('#renovar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+usuario_id+'&cod='+key+'&m=USD');	
+$$('#renovar_ahora').attr('href','http://indexdream.com/pago.php?tipo=AY&id='+usuario_id+'&cod='+key+'&m=COP');	
 			
 //$$('#zona_calendario').load('campanas2018.html');
 $$.post('campanas.html', {}, function (data) {        
@@ -1423,12 +1423,12 @@ var amigo_texto=$$('#compartir_texto').val();
 
 
 function calcular_compra(moneda){
-if(moneda==='COP'){
-var compra=12000;
-$$('#precio_compra').html('$ 12.000');	
-}else{
+if(moneda==='USD'){
 var compra=5;
 $$('#precio_compra').html('$ 5,00');	
+}else if(moneda==='COP'){
+var compra=12000;
+$$('#precio_compra').html('$ 12.000');	
 }
 
 $$('#total_compra').val(compra);
